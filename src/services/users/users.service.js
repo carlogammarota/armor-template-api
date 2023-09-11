@@ -2,8 +2,13 @@
 const { Users } = require('./users.class');
 const hooks = require('./users.hooks');
 
+// const { MongoseTest } = require('./mongose-test.class');
+const createModel = require('../../models/users.model');
+// const hooks = require('./mongose-test.hooks');
+
 module.exports = function (app) {
   const options = {
+    Model: createModel(app),
     paginate: app.get('paginate')
   };
 

@@ -28,5 +28,5 @@
       "passwordField": "password"
     }
   },
-  "mongodb": "mongodb+srv://admin-web:stuart@cluster0.podle1o.mongodb.net/themeforest"
+  "mongodb": "mongodb+srv://admin-web:stuart@cluster0.podle1o.mongodb.net/themeforest-003"
 }
