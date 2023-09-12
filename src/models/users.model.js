@@ -28,6 +28,14 @@
       password: { type: String, required: true },
       name: { type: String },
       permissions: { type: Array, required: true},
+      name: { type: String },
+      firstname: { type: String },
+      lastname: { type: String },
+      telephone: { type: String },
+      address: { type: String },
+      city: { type: String },
+      image: { type: String },
+
     }, {
       timestamps: true
     });

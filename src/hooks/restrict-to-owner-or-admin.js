@@ -5,17 +5,15 @@ const { Forbidden } = require('@feathersjs/errors');
 module.exports = function (options = {}) {
   return async (context) => {
     const { app, params } = context;
-
-    //si quiere hacer patch a permisos a permissions no lo dejo
-    if (context.method == 'patch' && context.path == 'users') {
-      //si no es admin
-      if (!params.user.permissions.includes('admin')) {
-        throw new Forbidden('No eres administrador para editar permisos');
-      } else {
-        return context;
-      }
-    }
     
+
+    
+    //si quiere hacer patch a permisos a permissions no lo dejo
+    if (params.user.permissions.includes('admin')) {
+      return context; // El usuario tiene permisos para editar y eliminar
+    } else {
+      // context.params.user.permissions = permissions = await context.app.service('users').get(context.params.user._id).permissions;
+      // console.log(context.params.user.permissions)
     const user = context.params.user; // Asume que el ID del usuario está en params.user._id
     // const user = await app.service('users').get(userId); // Obtén el usuario desde el servicio de usuarios
     const id_editar = context.arguments[0];
@@ -31,6 +29,7 @@ module.exports = function (options = {}) {
         throw new Forbidden('No es el dueño del usuario y no tiene los permisos necesarios para realizar esta acción');
       }
     }
+  }
 
   
 
