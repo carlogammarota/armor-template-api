@@ -7,6 +7,12 @@ const {
 const restrictToOwnerOrAdmin = require('../../hooks/restrict-to-owner-or-admin');
 const checkPermissions = require('feathers-permissions');
 
+
+
+const setCustomer = require('../../hooks/set-customer');
+
+
+
 module.exports = {
   before: {
     all: [],
@@ -24,8 +30,11 @@ module.exports = {
 //   // })
 // ],
 
+
+
     get: [authenticate('jwt')],
-    create: [ hashPassword('password') ],
+    create: [//poner en permissions ["customer"]
+    hashPassword('password'), setCustomer()],
     update: [hashPassword('password'), authenticate('jwt'), restrictToOwnerOrAdmin()],
     patch: [hashPassword('password'), authenticate('jwt'), restrictToOwnerOrAdmin()],
     remove: [authenticate('jwt'), restrictToOwnerOrAdmin()]

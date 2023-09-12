@@ -27,7 +27,7 @@
       email: { type: String, unique: true, lowercase: true, required: true },
       password: { type: String, required: true },
       name: { type: String },
-      permissions: { type: Array, default: ['customer'] },
+      permissions: { type: Array, required: true},
     }, {
       timestamps: true
     });

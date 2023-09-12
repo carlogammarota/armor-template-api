@@ -6,7 +6,15 @@ module.exports = function (options = {}) {
   return async (context) => {
     const { app, params } = context;
 
-    
+    //si quiere hacer patch a permisos a permissions no lo dejo
+    if (context.method == 'patch' && context.path == 'users') {
+      //si no es admin
+      if (!params.user.permissions.includes('admin')) {
+        throw new Forbidden('No eres administrador para editar permisos');
+      } else {
+        return context;
+      }
+    }
     
     const user = context.params.user; // Asume que el ID del usuario está en params.user._id
     // const user = await app.service('users').get(userId); // Obtén el usuario desde el servicio de usuarios
