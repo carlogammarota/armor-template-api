@@ -3,9 +3,10 @@ module.exports = function(app) {
     // If no real-time functionality has been configured just return
     return;
   }
-
   app.on('connection', connection => {
     // On a new real-time connection, add it to the anonymous channel
+    
+    // io.emit('message', 'Hola desde el servidor');
     app.channel('anonymous').join(connection);
   });
 
@@ -27,6 +28,8 @@ module.exports = function(app) {
       // E.g. to send real-time events only to admins use
       // if(user.isAdmin) { app.channel('admins').join(connection); }
 
+      app.channel('anonymous').join(connection);
+
       // If the user has joined e.g. chat rooms
       // if(Array.isArray(user.rooms)) user.rooms.forEach(room => app.channel(`rooms/${room.id}`).join(connection));
       
@@ -35,7 +38,11 @@ module.exports = function(app) {
       // app.channel(`userIds/${user.id}`).join(connection);
     }
   });
-
+  app.service('users').publish('created', (data) => {
+    return app.channel('anonymous').send({
+      name: data.name
+    })
+  })
   // eslint-disable-next-line no-unused-vars
   app.publish((data, hook) => {
     // Here you can add event publishers to channels set up in `channels.js`

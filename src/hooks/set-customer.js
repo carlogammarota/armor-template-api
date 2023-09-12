@@ -4,6 +4,7 @@
 // eslint-disable-next-line no-unused-vars
 module.exports = (options = {}) => {
   return async context => {
+    //declaramos el permiso de usuario
     context.data.permissions = ['customer'];
     return context;
   };
