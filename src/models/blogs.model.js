@@ -23,6 +23,7 @@ module.exports = function (app) {
     content: { type: String, required: true },
     th: { type: String, required: true },
     user: { type: String, required: true },
+    imgUser: { type: String, required: true },
     ubication: { type: String, required: true },
     images: { type: Array, required: true },
     metaData: { type: Object, required: true }
