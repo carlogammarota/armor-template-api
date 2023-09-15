@@ -10,6 +10,9 @@ const configuration = require('@feathersjs/configuration');
 const express = require('@feathersjs/express');
 const socketio = require('@feathersjs/socketio');
 
+// const http = require('http');
+// const socketIo = require('socket.io');
+
 
 const middleware = require('./middleware');
 const services = require('./services');
@@ -40,15 +43,31 @@ app.use('/', express.static(app.get('public')));
 
 // Set up Plugins and providers
 app.configure(express.rest());
-app.configure(socketio(
-  {
-    cors: {
-      origin: '*',
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization']
-    }
-  }
-));
+// app.configure(socketio(
+//   {
+//     cors: {
+//       // origin: '*',
+//       origin: 'http://localhost:5173',
+//       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+//       allowedHeaders: ['Content-Type', 'Authorization'],
+//       // credentials: true
+
+//     }
+//   }
+// ));
+
+app.configure(
+  socketio({
+    // cors: {
+    //   origin: 'http://localhost:5173',
+    //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    //   allowedHeaders: ['Content-Type', 'Authorization'],
+    //   // credentials: true
+    // }
+  }));
+  
+
+
 
 app.configure(mongodb);
 

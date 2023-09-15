@@ -5,7 +5,7 @@ module.exports = function(app) {
   }
   app.on('connection', connection => {
     // On a new real-time connection, add it to the anonymous channel
-    
+    // console.log("test")
     // io.emit('message', 'Hola desde el servidor');
     app.channel('anonymous').join(connection);
   });
