@@ -12,7 +12,9 @@ module.exports = function (app) {
     price: { type: Number, required: true },
     images: { type: Array, required: true },
     metaData: { type: Object, required: true },
-    category: { type: String, required: true },
+    category: { type: Object, required: true },
+    user_id: { type: String, required: true },
+    user: { type: Object, required: true },
   }, {
     timestamps: true
   });
