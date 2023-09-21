@@ -1,17 +1,17 @@
-// products-categories-model.js - A mongoose model
+// events-categories-model.js - A mongoose model
 // 
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
 module.exports = function (app) {
-  const modelName = 'productsCategories';
+  const modelName = 'eventsCategories';
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const schema = new Schema({
-    // text: { type: String, required: true }
+    // text: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     image: { type: String, required: true },
-    slug: { type: String, required: false },
+    slug: { type: String, required: true },
     metaData: { type: Object, required: false },
   }, {
     timestamps: true

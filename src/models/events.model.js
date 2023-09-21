@@ -18,13 +18,15 @@ module.exports = function (app) {
   title: { type: String, required: true },
   content: { type: String, required: true },
   location: { type: Array, required: true },
+  date: { type: Date, required: true },
+  price: { type: Number, required: true },
   user: { type: Object, required: true },
   user_id: { type: String, required: true },
   images: { type: Array, required: true },
   metaData: { type: Object, required: true },
   category: { type: Object, required: true },
   category_id: { type: String, required: true },
-  stats: { type: Object, required: true, default: { views: 0, likes: 0, shares: 0, comments: 0 } },
+  stats: { type: Object, required: false, default: { views: 0, likes: 0, shares: 0, comments: 0 } },
 
   }, {
     timestamps: true
