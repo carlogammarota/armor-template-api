@@ -18,6 +18,7 @@ module.exports = function (app) {
   title: { type: String, required: true },
   content: { type: String, required: true },
   location: { type: Array, required: true },
+  placeName: { type: String, required: true },
   date: { type: Date, required: true },
   price: { type: Number, required: true },
   user: { type: Object, required: true },
