@@ -29,6 +29,7 @@ module.exports = function (app) {
   category_id: { type: String, required: true },
   stats: { type: Object, required: false, default: { views: 0, likes: 0, shares: 0, comments: 0 } },
   tags: { type: Array, required: false },
+  createdAt: { type: Date, required: true, default: Date.now },
 
   }, {
     timestamps: true
