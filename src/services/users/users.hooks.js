@@ -32,7 +32,7 @@ module.exports = {
 
 
 
-    get: [authenticate('jwt')],
+    // get: [authenticate('jwt')],
     create: [//poner en permissions ["customer"]
     hashPassword('password'), setCustomer()],
     update: [hashPassword('password'), authenticate('jwt'), restrictToOwnerOrAdmin()],
