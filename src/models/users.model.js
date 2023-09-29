@@ -35,6 +35,7 @@
       address: { type: String },
       city: { type: String },
       image: { type: String },
+      content: { type: String },
 
     }, {
       timestamps: true
