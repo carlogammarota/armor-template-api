@@ -26,7 +26,10 @@ module.exports = function (app) {
     imgUser: { type: String, required: true },
     ubication: { type: String, required: true },
     images: { type: Array, required: true },
-    metaData: { type: Object, required: true }
+    metaData: { type: Object, required: true },
+    category: { type: Object, required: true },
+    category_id: { type: String, required: true },
+    user_id: { type: String, required: true },
     
   }, {
     timestamps: true
