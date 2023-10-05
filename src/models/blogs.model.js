@@ -30,6 +30,7 @@ module.exports = function (app) {
     category: { type: Object, required: true },
     category_id: { type: String, required: true },
     user_id: { type: String, required: true },
+    user: { type: String, required: true },
     
   }, {
     timestamps: true
