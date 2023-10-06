@@ -21,13 +21,11 @@ module.exports = function (app) {
     
     title: { type: String, required: true },
     content: { type: String, required: true },
-    th: { type: String, required: true },
-    imgUser: { type: String, required: true },
-    ubication: { type: String, required: true },
+    // imgUser: { type: String, required: true },
     images: { type: Array, required: true },
     metaData: { type: Object, required: true },
     category: { type: Object, required: true },
-    category_id: { type: String, required: true },
+    category_id: { type: String, required: false },
     user_id: { type: String, required: true },
     user: { type: Object, required: true },
     
