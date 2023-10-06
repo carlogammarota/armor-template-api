@@ -18,11 +18,12 @@ exports.Products = class Products extends Service {
           // Realiza la solicitud Axios POST a localhost:2222/notification
           await axios.post('http://localhost:2222/notification', axiosData);
     
-        //   return createdBlog;
+        return data; // Devuelve el blog creado
         } catch (error) {
           // Maneja errores si la solicitud Axios POST falla
           console.error('Error al enviar la notificación:', error);
         //   return createdBlog; // Puedes decidir qué hacer en caso de error
+        return data;
         }
       }
 };
