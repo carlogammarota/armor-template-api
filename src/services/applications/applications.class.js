@@ -11,7 +11,7 @@ exports.Applications = class Applications extends Service {
     
         try {
           const response = await axios.post(
-            "http://localhost:2323/build-and-create",
+            "http://64.227.76.217:2323/build-and-create",
             {
               password: "contraseña_maestra",
               data: {
