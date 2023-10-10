@@ -10,7 +10,7 @@ module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const schema = new Schema({
-    hostPort: { type: Number, unique: true },
+    // hostPort: { type: Number, unique: true },
     // hostPort: { type: Number, required: false, unique: true  },
 
 
@@ -25,8 +25,29 @@ module.exports = function (app) {
     timestamps: true
   });
 
+   // Define el campo hostPort después de la definición del schema
+  //  schema.add({
+  //   hostPort: { type: Number, unique: true }
+  // });
+    // Define un hook 'beforeValidate' para agregar el campo 'hostPort' antes de la validación
+    // schema.pre('validate', function (next) {
+    //   if (!this.hostPort) {
+    //     this.hostPort = 1001; // Valor inicial para hostPort
+    //   }
+    //   next();
+    // });
 
-  schema.plugin(mongooseSequence, { inc_field: 'hostPort', start_seq: 1001 });
+    
+  
+    // Aplica el plugin 'mongoose-sequence' al campo 'hostPort'
+    // schema.plugin(mongooseSequence, { inc_field: 'hostPort', start_seq: 1001 });
+    
+    // Resto del código...
+  
+    
+
+
+  // schema.plugin(mongooseSequence, { inc_field: 'hostPort', start_seq: 1001 });
   
   // This is necessary to avoid model compilation errors in watch mode
   // see https://mongoosejs.com/docs/api/connection.html#connection_Connection-deleteModel

@@ -1,11 +1,13 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 
+const portCount = require('../../hooks/port-count');
+
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
     find: [],
     get: [],
-    create: [],
+    create: [portCount()],
     update: [],
     patch: [],
     remove: []

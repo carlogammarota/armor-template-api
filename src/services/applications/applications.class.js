@@ -4,11 +4,13 @@ exports.Applications = class Applications extends Service {
 
 
     async create(data, params) {
-        console.log("data", params.user);
+        
     
-        const user = params.user;
+        // const user = params.user;
         const { subdomain, logo, title, description, theme, plugins } = data;
-    
+        // console.log("params.user");
+        // console.log(data);
+        // return 0
         try {
           const response = await axios.post(
             "http://64.227.76.217:2323/build-and-create",
