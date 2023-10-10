@@ -11,20 +11,27 @@ exports.Applications = class Applications extends Service {
         // console.log("params.user");
         // console.log(data);
         console.log("Create App");
+        console.log(data.subdomain)
+        console.log(data.hostPort)
         // return 0
         try {
           const response = await axios.post(
             "http://64.227.76.217:2323/build-and-create",
             {
-              password: "contraseña_maestra",
-              data: {
-                hostPort: data.hostPort,
-                subdomain: data.subdomain,
-              },
-            }
+                "password": "contraseña_maestra",
+                "data": {
+                    "hostPort": data.hostPort,
+                    "subdomain": data.subdomain
+                }
+            }            
           );
           console.log("response", response);
-          return response.data; // Devuelve los datos de la respuesta o lo que sea necesario aquí.
+        //   return response.data; // Devuelve los datos de la respuesta o lo que sea necesario aquí.
+        return {
+            message: "Aplicación creada correctamente",
+            data: response.data,
+            link: `https://${data.subdomain}.armortemplate.site`
+          }
         } catch (error) {
           console.log("error", error);
           return {
