@@ -27,11 +27,13 @@ exports.Applications = class Applications extends Service {
           );
           console.log("response", response);
         //   return response.data; // Devuelve los datos de la respuesta o lo que sea necesario aquí.
-        return {
-            message: "Aplicación creada correctamente",
-            data: response.data,
-            link: `https://${data.subdomain}.armortemplate.site`
-          }
+        // return {
+        //     message: "Aplicación creada correctamente",
+        //     data: response.data,
+        //     link: `https://${data.subdomain}.armortemplate.site`
+        //   }
+        //seguir con la creacion de la app
+        
         } catch (error) {
           console.log("error", error);
           return {
