@@ -3,8 +3,13 @@ const axios = require("axios");
 exports.Applications = class Applications extends Service {
 
 
+    
+
     async create(data, params) {
         
+        // return {
+            
+
     
         // const user = params.user;
         const { subdomain, logo, title, description, theme, plugins } = data;
@@ -26,14 +31,15 @@ exports.Applications = class Applications extends Service {
             }            
           );
           console.log("response", response);
+        //   return data
+        //   return context;
         //   return response.data; // Devuelve los datos de la respuesta o lo que sea necesario aquí.
-        // return {
-        //     message: "Aplicación creada correctamente",
-        //     data: response.data,
-        //     link: `https://${data.subdomain}.armortemplate.site`
-        //   }
-        //seguir con la creacion de la app
-        
+        return {
+            data,
+            message: "Aplicación creada correctamente",
+            // data: response.data,
+            link: `https://${data.subdomain}.armortemplate.site`
+          }
         } catch (error) {
           console.log("error", error);
           return {
@@ -41,7 +47,11 @@ exports.Applications = class Applications extends Service {
           }
           throw error; // Lanza una excepción si hay un error.
         }
+        
+
       }
+
+
 
   //post
   //model
