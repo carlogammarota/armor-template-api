@@ -9,6 +9,7 @@ module.exports = (options = {}) => {
       // return {
           
       const data = context.data;
+      context.data.link = "https://"+data.subdomain+".armortemplate.site";
   
       console.log("Create App");
       // return 0

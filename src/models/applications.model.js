@@ -18,6 +18,7 @@ module.exports = function (app) {
     theme: { type: String, required: true },
     plugins: { type: Array, required: true },
     user: { type: Object, required: true },
+    link: { type: String, required: false },
   }, {
     timestamps: true
   });
