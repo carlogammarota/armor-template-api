@@ -10,6 +10,7 @@ exports.Applications = class Applications extends Service {
         const { subdomain, logo, title, description, theme, plugins } = data;
         // console.log("params.user");
         // console.log(data);
+        console.log("Create App");
         // return 0
         try {
           const response = await axios.post(
