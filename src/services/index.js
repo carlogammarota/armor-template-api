@@ -10,6 +10,9 @@ const productsCategories = require('./products-categories/products-categories.se
 const blogsCategories = require('./blogs-categories/blogs-categories.service.js');
 const events = require('./events/events.service.js');
 const eventsCategories = require('./events-categories/events-categories.service.js');
+const settings = require('./settings/settings.service.js');
+
+const applications = require('./applications/applications.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -24,4 +27,7 @@ module.exports = function (app) {
   app.configure(blogsCategories);
   app.configure(events);
   app.configure(eventsCategories);
+  app.configure(settings);
+
+  app.configure(applications);
 };
