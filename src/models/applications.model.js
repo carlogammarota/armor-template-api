@@ -10,7 +10,7 @@ module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const schema = new Schema({
-    hostPort: { type: Number },
+    // hostPort: { type: Number },
     subdomain: { type: String, unique: true },
     logo: { type: String, required: true },
     title: { type: String, required: true },

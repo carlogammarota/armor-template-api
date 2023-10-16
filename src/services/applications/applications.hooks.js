@@ -4,6 +4,10 @@ const portCount = require('../../hooks/port-count');
 
 const createApp = require('../../hooks/create-app');
 
+const deletePorts = require('../../hooks/delete-ports');
+
+const generateApp = require('../../hooks/generate-app');
+
 module.exports = {
   before: {
     // all: [ authenticate('jwt') ],
@@ -19,7 +23,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [generateApp()],
     update: [],
     patch: [],
     remove: []
@@ -29,7 +33,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [deletePorts()],
     update: [],
     patch: [],
     remove: []

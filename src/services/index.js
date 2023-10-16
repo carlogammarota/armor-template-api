@@ -13,6 +13,7 @@ const eventsCategories = require('./events-categories/events-categories.service.
 const settings = require('./settings/settings.service.js');
 
 const applications = require('./applications/applications.service.js');
+const ports = require('./ports/ports.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -30,4 +31,5 @@ module.exports = function (app) {
   app.configure(settings);
 
   app.configure(applications);
+  app.configure(ports);
 };

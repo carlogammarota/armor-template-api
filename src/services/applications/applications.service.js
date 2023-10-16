@@ -11,10 +11,11 @@ module.exports = function (app) {
     paginate: app.get('paginate')
   };
 
-  console.log("service")
+  console.log("todo fue bien!!")
 
 
   //create
+
 
 
   // context
