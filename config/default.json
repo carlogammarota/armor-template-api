@@ -28,6 +28,6 @@
       "passwordField": "password"
     }
   },
-  "mongodb": "mongodb://example_username:example_password@localhost:27017/template?authSource=admin"
+  "mongodb": "mongodb+srv://admin-web:stuart@cluster0.podle1o.mongodb.net/themeforest-003"
   
 }

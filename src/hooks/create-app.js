@@ -13,27 +13,27 @@ module.exports = (options = {}) => {
   
       console.log("Create App");
       // return 0
-      try {
-        const response = await axios.post(
-          "http://64.227.76.217:2323/build-and-create",
-          {
-              "password": "contraseña_maestra",
-              "data": {
-                  "hostPort": data.hostPort,
-                  "subdomain": data.subdomain
-              }
-          }            
-        );
+      // try {
+      //   const response = await axios.post(
+      //     "http://64.227.76.217:2323/build-and-create",
+      //     {
+      //         "password": "contraseña_maestra",
+      //         "data": {
+      //             "hostPort": data.hostPort,
+      //             "subdomain": data.subdomain
+      //         }
+      //     }            
+      //   );
 
-      return context
-      // await 
-      } catch (error) {
-        console.log("error", error);
-        return {
-          message: "Error al crear la aplicación",
-        }
-        // throw error; // Lanza una excepción si hay un error.
-      }
+      // return context
+      // // await 
+      // } catch (error) {
+      //   console.log("error", error);
+      //   return {
+      //     message: "Error al crear la aplicación",
+      //   }
+      //   // throw error; // Lanza una excepción si hay un error.
+      // }
       
       
 
