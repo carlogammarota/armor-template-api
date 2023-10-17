@@ -35,12 +35,16 @@ module.exports = function (app) {
     products: { type: Boolean, required: false },
     events: { type: Boolean, required: false },
     blog: { type: Boolean, required: false },
+    support: { type: Boolean, required: false },
+    documentation: { type: Boolean, required: false },
+    pricing: { type: Boolean, required: false },
     users: { type: Boolean, required: false },
     admin: { type: Boolean, required: false },
     plugins: { type: Array, required: false },
     meta: { type: Object, required: true },
     siteViews: { type: Object, required: false },
     adminViews: { type: Object, required: false },
+    
 
   }, {
     timestamps: true,
