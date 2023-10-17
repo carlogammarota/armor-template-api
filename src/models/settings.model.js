@@ -39,6 +39,8 @@ module.exports = function (app) {
     admin: { type: Boolean, required: false },
     plugins: { type: Array, required: false },
     meta: { type: Object, required: true },
+    siteViews: { type: Object, required: false },
+    adminViews: { type: Object, required: false },
 
   }, {
     timestamps: true,
