@@ -1,22 +1,16 @@
-const { authenticate } = require('@feathersjs/authentication').hooks;
+
+
+const changePayments = require('../../hooks/change-payments');
 
 module.exports = {
   before: {
-    // all: [ authenticate('jwt') ],
+    all: [],
     find: [],
     get: [],
-    create: [
-      authenticate('jwt')
-    ],
-    update: [
-      authenticate('jwt')
-    ],
-    patch: [
-      authenticate('jwt')
-    ],
-    remove: [
-      authenticate('jwt')
-    ]
+    create: [changePayments()],
+    update: [],
+    patch: [],
+    remove: []
   },
 
   after: {

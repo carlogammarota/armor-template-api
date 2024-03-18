@@ -14,6 +14,17 @@ const settings = require('./settings/settings.service.js');
 
 const applications = require('./applications/applications.service.js');
 const ports = require('./ports/ports.service.js');
+
+
+const generarLink = require('./generar-link/generar-link.service.js');
+
+
+const payments = require('./payments/payments.service.js');
+
+
+const mercadopago = require('./mercadopago/mercadopago.service.js');
+
+
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -32,4 +43,9 @@ module.exports = function (app) {
 
   app.configure(applications);
   app.configure(ports);
+
+
+  app.configure(generarLink);
+  app.configure(payments);
+  app.configure(mercadopago);
 };
