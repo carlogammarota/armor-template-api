@@ -40,7 +40,7 @@ module.exports = function (app) {
     pricing: { type: Boolean, required: false },
     users: { type: Boolean, required: false },
     admin: { type: Boolean, required: false },
-    plugins: { type: Array, required: false },
+    plugins: { type: Object, required: false },
     meta: { type: Object, required: true },
     siteViews: { type: Object, required: false },
     adminViews: { type: Object, required: false },
