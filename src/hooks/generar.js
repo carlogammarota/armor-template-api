@@ -209,7 +209,7 @@ module.exports = (options = {}) => {
 
 
       //local test
-      notification_url: 'https://1e5b-181-111-47-101.ngrok-free.app/mercadopago',
+      notification_url: 'https://api-sabores-del-monte.armortemplate.site/mercadopago',
 
 
 
