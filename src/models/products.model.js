@@ -15,6 +15,7 @@ module.exports = function (app) {
     category: { type: Object, required: true },
     user_id: { type: String, required: true },
     user: { type: Object, required: true },
+    slug: { type: String, required: true },
   }, {
     timestamps: true
   });
