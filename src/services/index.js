@@ -25,6 +25,13 @@ const payments = require('./payments/payments.service.js');
 const mercadopago = require('./mercadopago/mercadopago.service.js');
 
 
+
+
+const productsMeta = require('./products-meta/products-meta.service.js');
+
+
+
+
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -48,4 +55,5 @@ module.exports = function (app) {
   app.configure(generarLink);
   app.configure(payments);
   app.configure(mercadopago);
+  app.configure(productsMeta);
 };

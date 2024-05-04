@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 // eslint-disable-next-line no-unused-vars
 module.exports = (options = {}) => {
   return async context => {
-
+    
     let settings = await context.app.service('settings').find();
     // console.log('settings', settings)
     let token = settings.data[0].plugins.mercadopago.mercadopago_token;
