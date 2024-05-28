@@ -25,7 +25,6 @@
   },
   "scripts": {
     "test": "yarn run lint && yarn run mocha",
-    "lint": "eslint src/. test/. --config .eslintrc.json --fix",
     "dev": "nodemon src/",
     "start": "node src/",
     "mocha": "mocha test/ --recursive --exit",
@@ -65,7 +64,6 @@
   },
   "devDependencies": {
     "axios": "^1.5.0",
-    "eslint": "^7.17.0",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6"
   }

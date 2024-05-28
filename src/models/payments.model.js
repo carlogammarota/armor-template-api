@@ -27,6 +27,8 @@ module.exports = function (app) {
       moneda: { type: String, required: false },
       tipo: { type: String, required: false },
       detalle: { type: Object, required: false },
+      orderId: { type: String, required: false, unique: true },
+      envio: { type: Object, required: false },
     },
     {
       timestamps: true,

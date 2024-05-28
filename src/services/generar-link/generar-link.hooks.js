@@ -1,16 +1,20 @@
+const generar = require("../../hooks/generar");
 
-
-const generar = require('../../hooks/generar');
-
+const imprimir = (module.exports = (options = {}) => {
+  return async (context) => {
+    console.log("imprimir", context.data);
+    return context;
+  };
+});
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [imprimir()],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   after: {
@@ -20,7 +24,7 @@ module.exports = {
     create: [generar()],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   error: {
@@ -30,6 +34,6 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: []
-  }
+    remove: [],
+  },
 };
