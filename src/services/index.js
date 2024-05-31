@@ -32,6 +32,11 @@ const productsMeta = require('./products-meta/products-meta.service.js');
 
 
 
+const cupones = require('./cupones/cupones.service.js');
+
+
+
+
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -56,4 +61,5 @@ module.exports = function (app) {
   app.configure(payments);
   app.configure(mercadopago);
   app.configure(productsMeta);
+  app.configure(cupones);
 };
