@@ -77,38 +77,34 @@ async function enviarCorreo(pago) {
 
 module.exports = (options = {}) => {
   return async (context) => {
-
-
     //configuracion mercadopago
 
     //el accestoken esta en el servicio settings[0] en plugins.mercadopago.mercadopago_token
 
     //pensado para implementar pronto
-    let settings = await context.app.service('settings').find();
+    let settings = await context.app.service("settings").find();
     let token = settings.data[0].plugins.mercadopago.mercadopago_token;
-
 
     mercadopago.configure({
       sandbox: false, // si estás probando en el ambiente de pruebas de MercadoPago
-    
+
       //la idea es sacar el accces token de la base de datos settings
-    
+
       // access_token: 'APP_USR-8509403097579740-051601-e1c674ca876a173dd84e3b63a2ac3d6e-1375519379'
-    
+
       //produccion
       // access_token: 'APP_USR-3967596500928054-020703-58d66af4da4675b3a2c2c5ed3d5ca6d2-94662750'
       // aquí debes colocar tu Client Secret
-    
+
       // para test
       // access_token: 'APP_USR-5050283024010521-080117-1be3cde8e474088c42201a3722be9673-1304411976'
-    
+
       //cuenta ro
       // access_token:
       //   "APP_USR-2354878281626192-122521-a41bf257a1dd84f3f5edc648a49d806a-1042694053",
 
-      access_token: token
+      access_token: token,
     });
-
 
     let req = context.params;
 
@@ -160,25 +156,33 @@ module.exports = (options = {}) => {
           // if(pago.estado == !'aprobado'){
           // console.log('entroooooooooooooooooooooooooooooooo
           // try {
-            let pago = await context.app.service("payments").get(id_pago);
+          let pago = await context.app.service("payments").get(id_pago);
 
-            console.log(payment)
-              console.log(payment)
-              await context.app.service("payments").patch(id_pago, {
-                estado: "aprobado",
-                // linkDePago: "https://armortemplate.com/gracias/" + id_pago,
-                detalle: payment,
-                //con el payment.id se puede obtener el comprobante de pago
+          console.log(payment);
+          console.log(payment);
+          await context.app.service("payments").patch(id_pago, {
+            estado: "aprobado",
+            // linkDePago: "https://armortemplate.com/gracias/" + id_pago,
+            detalle: payment,
+            //con el payment.id se puede obtener el comprobante de pago
 
-                // linkDePago: payment.transaction_details.external_resource_url,
-              });
+            // linkDePago: payment.transaction_details.external_resource_url,
+          });
 
+          const id_cupon = pago.id_cupon;
 
-              // Ejemplo de llamada a la función (asegúrate de definir 'pago' y 'linksHtml')
-              // enviarCorreo(pago, "Link de Descarga");
+          //restarle 1 a cantidad_disponible en servicio cupon
+          let cupon = await context.app.service("cupones").get(id_cupon);
+          let nueva_cantidad_disponible = cupon.cantidad_disponible - 1;
+          await context.app.service("cupones").patch(id_cupon, {
+            cantidad_disponible: nueva_cantidad_disponible,
+          });
 
-              enviarCorreo(pago);
-           
+          // Ejemplo de llamada a la función (asegúrate de definir 'pago' y 'linksHtml')
+          // enviarCorreo(pago, "Link de Descarga");
+
+          enviarCorreo(pago);
+
           // } catch (error) {
           //   console.log("error", error);
           // }

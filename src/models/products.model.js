@@ -18,6 +18,7 @@ module.exports = function (app) {
       user: { type: Object, required: true },
       slug: { type: String, required: true },
       quantity: { type: Number, required: true },
+      vegan: { type: Boolean, required: false },
     },
     {
       timestamps: true,

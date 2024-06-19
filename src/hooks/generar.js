@@ -51,7 +51,7 @@ module.exports = (options = {}) => {
     //productos
     let productos = context.result.productos;
 
-    console.log("context.result", context.result);
+    console.log("CONTEXT-RESULT >", context.result);
 
     // email del comprador
     let email = context.result.email;
@@ -74,7 +74,15 @@ module.exports = (options = {}) => {
     for (let i = 0; i < productos.length; i++) {
       total += productos[i].precio * productos[i].quantity;
     }
-    context.result.total = total;
+    // context.result.total = total;
+
+    //si hay cupon.codigo aplicar descuento que es un porcentaje
+    if (context.result.cupon.estado === true) {
+      let cupon = context.result.cupon;
+      let descuento = (total * cupon.descuento) / 100;
+      total = total - descuento;
+      context.result.total = total;
+    }
 
     //agregar descripcion
 
@@ -83,7 +91,7 @@ module.exports = (options = {}) => {
     }
 
     //imprimir productos para ver si se guardaron los precios
-    console.log("result", context.result);
+    // console.log("result", context.result);
 
     //ge
 
@@ -105,12 +113,13 @@ module.exports = (options = {}) => {
       // cantidadTickets: context.result.cantidad,
       email: email,
       productos: context.result.productos,
-      total: total,
+      total: context.result.total,
       moneda: "ARS",
       tipo: context.result.tipo,
       estado: "pendiente",
       orderId: generateOrderId(),
       envio: context.result.envio,
+      cupon: context.result.cupon,
     });
 
     //id donde esta guardado el pago en este momento deberia estar en pendiente
@@ -148,6 +157,7 @@ module.exports = (options = {}) => {
         unit_price: producto.precio,
       };
     });
+    //hay que restarle el descuento si es que hay
 
     // let entradas = [{
     //   'id': 1,
@@ -176,7 +186,16 @@ module.exports = (options = {}) => {
       //   },
       // ],
       // items: context.data.items,
-      items: items,
+      // items: items,
+      items: [
+        {
+          id: 1,
+          title: "Sabores Del Monte",
+          quantity: 1,
+          currency_id: "ARS",
+          unit_price: total,
+        },
+      ],
 
       // payer: {
       //   email: 'leo_elgigante_22@hotmail.com'
@@ -202,7 +221,7 @@ module.exports = (options = {}) => {
 
       //local test
       // notification_url: "https://api-server.saboresdelmonte.com/mercadopago",
-      notification_url: "https://c5f7-181-99-7-227.ngrok-free.app/mercadopago",
+      notification_url: "https://9dcf-181-99-7-227.ngrok-free.app/mercadopago",
 
       // notification_url: 'https://api.alguientiene.com/mercadopago',
     };
