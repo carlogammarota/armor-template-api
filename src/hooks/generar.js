@@ -168,6 +168,16 @@ module.exports = (options = {}) => {
     //   'unit_price': 10
     // }];
 
+    //al total hay que sumarle el envio que son 2000
+    //de aca se cambia el envio
+
+    // si la compra supera los 15000 el envio es gratis
+    if (total > 15000) {
+      total = total;
+    } else {
+      total = total + 2000;
+    }
+
     const preference = {
       // items: [
       //   {
@@ -221,7 +231,7 @@ module.exports = (options = {}) => {
 
       //local test
       // notification_url: "https://api-server.saboresdelmonte.com/mercadopago",
-      notification_url: "https://9dcf-181-99-7-227.ngrok-free.app/mercadopago",
+      notification_url: "https://53a4-181-99-7-227.ngrok-free.app/mercadopago",
 
       // notification_url: 'https://api.alguientiene.com/mercadopago',
     };

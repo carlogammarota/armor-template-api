@@ -1,17 +1,19 @@
 // Initializes the `generar-link` service on path `/generar-link`
-const { GenerarLink } = require('./generar-link.class');
-const hooks = require('./generar-link.hooks');
+const { GenerarLink } = require("./generar-link.class");
+const hooks = require("./generar-link.hooks");
 
 module.exports = function (app) {
   const options = {
-    paginate: app.get('paginate')
+    paginate: app.get("paginate"),
   };
 
+  console.log("generar-link.service.js");
+
   // Initialize our service with any options it requires
-  app.use('/generar-link', new GenerarLink(options, app));
+  app.use("/generar-link", new GenerarLink(options, app));
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('generar-link');
+  const service = app.service("generar-link");
 
   service.hooks(hooks);
 };
