@@ -80,9 +80,99 @@ async function enviarCorreo(pago) {
 
     //si el total supero los 15.000 el envio es gratis
     if (pago.total > 15000) {
-      customizedHtml = customizedHtml.replace("[envio]", 0 + "ARS");
+      customizedHtml = customizedHtml.replace("[envio]", 0 + " ARS");
       customizedHtml = customizedHtml.replace("[total]", pago.total);
     }
+
+    // <div style="margin-top: 1.25rem">
+    //   <a
+    //     href="${pago.linkDePago}"
+    //     style="
+    //                                 display: inline-block;
+    //                                 padding-left: 1.5rem;
+    //                                 padding-right: 1.5rem;
+    //                                 padding-top: 0.625rem;
+    //                                 padding-bottom: 0.625rem;
+    //                                 background-color: #2563eb;
+    //                                 color: #ffffff;
+    //                                 font-weight: 500;
+    //                                 font-size: 0.75rem;
+    //                                 text-transform: uppercase;
+    //                                 border-radius: 0.25rem;
+    //                                 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    //                                 transition: background-color 0.15s
+    //                                     ease-in-out,
+    //                                   box-shadow 0.15s ease-in-out;
+    //                               "
+    //   >
+    //     Pagar Ahora
+    //   </a>
+    // </div>;
+    //en estado pago dependiendo del estado se muestra un boton para pagar o un mensaje de aprobado o rechazado
+    let botonPago = "";
+    if (pago.estado == "pendiente") {
+      botonPago = `
+      <div style="margin-top: 1.25rem">
+        <a
+          href="${pago.linkDePago}"
+          style="
+              display: inline-block;
+              padding-left: 1.5rem;
+              padding-right: 1.5rem;
+              padding-top: 0.625rem;
+              padding-bottom: 0.625rem;
+              background-color: #2563eb;
+              color: #ffffff;
+              font-weight: 500;
+              font-size: 0.75rem;
+              text-transform: uppercase;
+              border-radius: 0.25rem;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+              transition: background-color 0.15s
+
+
+              ease-in-out,
+
+
+
+                box-shadow 0.15s ease-in-out;
+                                    " 
+        >
+
+          Pagar Ahora
+        </a>
+      </div>
+    `;
+    } else if (pago.estado == "aprobado") {
+      botonPago = `
+      <div style="margin-top: 1.25rem">
+        
+        <p style="color: #2563eb; font-weight: 500; font-size: 0.75rem; text-transform: uppercase;">
+          Pago Aprobado
+        </p>
+      </div>
+    `;
+    } else if (pago.estado == "rechazado") {
+      botonPago = `
+      <div style="margin-top: 1.25rem">
+
+        <p style="color: #2563eb; font-weight: 500; font-size: 0.75rem; text-transform: uppercase;">
+          Pago Rechazado
+        </p>
+      </div>
+    `;
+    } else if (pago.estado == "en proceso") {
+      botonPago = `
+      <div style="margin-top: 1.25rem">
+
+        <p style="color: #2563eb; font-weight: 500; font-size: 0.75rem; text-transform: uppercase;">
+          Pago en Proceso
+        </p>
+      </div>
+    `;
+    }
+
+    customizedHtml = customizedHtml.replace("[estado_pago]", botonPago);
 
     // Detalles del correo electrónico
     const mailOptions = {
