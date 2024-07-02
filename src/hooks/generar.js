@@ -100,7 +100,8 @@ module.exports = (options = {}) => {
       tipo: context.result.tipo,
       estado: "pendiente",
       orderId,
-      envio: costoEnvio,
+      precioEnvio: costoEnvio,
+      envio: context.result.envio,
       cupon: context.result.cupon,
     });
 

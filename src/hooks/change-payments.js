@@ -69,7 +69,9 @@ async function enviarCorreo(pago) {
       .replace("{{nombre}}", pago.envio.nombre)
       .replace("[id_compra]", pago.orderId)
       .replace("[correo]", pago.email)
-      .replace("[total]", pago.total)
+      .replace("[totalEnProductos]", pago.total)
+      .replace("[envio]", 2000 + "ARS")
+      .replace("[total]", pago.total + 2000)
       .replace("[estado]", pago.estado)
       .replace("[fecha]", new Date(pago.createdAt).toLocaleDateString())
       .replace("[productos]", productosHtml)
@@ -80,7 +82,7 @@ async function enviarCorreo(pago) {
     const mailOptions = {
       from: "carlo.gammarota@gmail.com",
       to: pago.email,
-      subject: "Sabores del Monte - Compra Exitosa",
+      subject: "Sabores del Monte - Detalles de tu compra",
       html: customizedHtml,
     };
 
