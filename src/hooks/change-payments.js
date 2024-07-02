@@ -47,24 +47,41 @@ async function enviarCorreo(pago) {
       pass: "wv5Xn140CbZDW9HR", // Considera usar variables de entorno para manejar las credenciales de forma segura
     },
   });
-
   try {
     // Leer el archivo HTML como una cadena de texto
     let htmlContent = await readFile("./email.html", "utf8");
-    // Reemplaza los marcadores de posición en el HTML con datos reales
-    let customizedHtml = htmlContent.replace("{{nombre}}", pago.email);
+
+    // Formatear la lista de productos
+    let productosHtml = pago.productos
+      .map(
+        (producto) => `
+      <div class="flex justify-between items-center border-b border-gray-200 pb-2">
+        <span class="text-gray-600">${producto.product.title}</span>
+        <span class="text-gray-600">Cantidad: ${producto.quantity}</span>
+        <span class="text-gray-900">${producto.product.price} ARS</span>
+      </div>
+    `
+      )
+      .join("");
+
+    // Reemplazar los marcadores de posición en el HTML con datos reales
+    let customizedHtml = htmlContent
+      .replace("{{nombre}}", pago.envio.nombre)
+      .replace("[id_compra]", pago.orderId)
+      .replace("[correo]", pago.email)
+      .replace("[total]", pago.total)
+      .replace("[estado]", pago.estado)
+      .replace("[fecha]", new Date(pago.createdAt).toLocaleDateString())
+      .replace("[productos]", productosHtml)
+      .replace("[fecha_entrega]", pago.envio.diaEnvio)
+      .replace("[hora_entrega]", pago.envio.diaEnvio);
 
     // Detalles del correo electrónico
     const mailOptions = {
       from: "carlo.gammarota@gmail.com",
       to: pago.email,
-      subject: "Armor Template - Compra Exitosa",
+      subject: "Sabores del Monte - Compra Exitosa",
       html: customizedHtml,
-
-      //archivos adjuntos
-      // attachments: attachments,
-
-      // Aquí puedes agregar tus archivos adjuntos si los necesitas
     };
 
     // Envío del correo electrónico
@@ -169,6 +186,8 @@ module.exports = (options = {}) => {
             // linkDePago: payment.transaction_details.external_resource_url,
           });
 
+          enviarCorreo(pago);
+
           const id_cupon = pago.id_cupon;
 
           //restarle 1 a cantidad_disponible en servicio cupon
@@ -180,8 +199,6 @@ module.exports = (options = {}) => {
 
           // Ejemplo de llamada a la función (asegúrate de definir 'pago' y 'linksHtml')
           // enviarCorreo(pago, "Link de Descarga");
-
-          enviarCorreo(pago);
 
           // } catch (error) {
           //   console.log("error", error);
@@ -195,6 +212,10 @@ module.exports = (options = {}) => {
               estado: "rechazado",
               // id_orden: external_reference_variable
             });
+
+            //enviar email de rechazo
+            let pago = await context.app.service("payments").get(id_pago);
+            enviarCorreo(pago);
             // console.log('paymentNew', paymentNew);
           } catch (error) {
             console.log("error", error);
