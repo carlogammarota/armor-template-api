@@ -14,10 +14,8 @@ const app = express();
 // Middleware para procesar solicitudes con cuerpo JSON
 app.use(bodyParser.json());
 
-
 // const mercadopago = require('mercadopago');
 // const crypto = require('crypto');
-
 
 module.exports = (options = {}) => {
   return async (context) => {
@@ -25,13 +23,10 @@ module.exports = (options = {}) => {
     let settings = await context.app.service("settings").find();
     let token = settings.data[0].plugins.mercadopago.mercadopago_token;
 
-<<<<<<< HEAD
     //por el momento harcodeamos el token
     token =
       "APP_USR-5050283024010521-080117-1be3cde8e474088c42201a3722be9673-1304411976";
 
-=======
->>>>>>> 543b013ac5e6384d9bd881fdfe078203ec6f07ed
     // Configurar MercadoPago
     mercadopago.configure({
       sandbox: false,
@@ -39,7 +34,6 @@ module.exports = (options = {}) => {
     });
 
     const tipo = context.result.tipo;
-<<<<<<< HEAD
 
     // Moneda
     context.result.moneda = "ARS";
@@ -80,49 +74,17 @@ module.exports = (options = {}) => {
     context.result.total = total;
 
     // Agregar descripción a los productos
-=======
-    context.result.moneda = "ARS";
-    let productos = context.result.productos;
-    let email = context.result.email;
-
-    if (tipo !== "producto") {
-      throw new Error("No es un producto");
-    }
-
-    // Obtener precios de los productos
->>>>>>> 543b013ac5e6384d9bd881fdfe078203ec6f07ed
     for (let i = 0; i < productos.length; i++) {
       let precio = await context.app.service("products").get(productos[i].id);
       productos[i].precio = precio.price;
       productos[i].description = productos[i].content;
     }
 
-<<<<<<< HEAD
     // Función para generar Order ID
     function generateOrderId() {
       const randomNum = crypto.randomInt(0, 1000);
       const formattedNum = randomNum.toString().padStart(5, "0");
       return `UL-${formattedNum}`;
-=======
-    // Calcular total de productos
-    let totalDeProductos = productos.reduce((acc, item) => acc + item.precio * item.quantity, 0);
-
-    // Aplicar descuento si hay cupón
-    // let descuento = 0;
-    // if (context.result.cupon && context.result.cupon.estado) {
-    //   descuento = (totalDeProductos * context.result.cupon.descuento) / 100;
-    //   totalDeProductos -= descuento;
-    // }
-
-    // Añadir costo de envío si el total es menor a 15000
-    let costoEnvio = totalDeProductos < 15000 ? 2000 : 0;
-    let total = totalDeProductos + costoEnvio;
-
-    // Generar ID de la orden
-    function generateOrderId() {
-      const randomNum = crypto.randomInt(0, 1000);
-      return `UL-${randomNum.toString().padStart(5, "0")}`;
->>>>>>> 543b013ac5e6384d9bd881fdfe078203ec6f07ed
     }
 
     let orderId = generateOrderId();
