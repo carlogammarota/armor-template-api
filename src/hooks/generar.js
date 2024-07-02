@@ -24,8 +24,8 @@ module.exports = (options = {}) => {
     let token = settings.data[0].plugins.mercadopago.mercadopago_token;
 
     //por el momento harcodeamos el token
-    token =
-      "APP_USR-5050283024010521-080117-1be3cde8e474088c42201a3722be9673-1304411976";
+    // token =
+    //   "APP_USR-5050283024010521-080117-1be3cde8e474088c42201a3722be9673-1304411976";
 
     // Configurar MercadoPago
     mercadopago.configure({
