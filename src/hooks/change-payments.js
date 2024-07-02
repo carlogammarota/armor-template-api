@@ -275,16 +275,26 @@ module.exports = (options = {}) => {
 
           console.log(payment);
           console.log(payment);
-          await context.app.service("payments").patch(id_pago, {
+          pago = await context.app.service("payments").patch(id_pago, {
             estado: "aprobado",
             // linkDePago: "https://armortemplate.com/gracias/" + id_pago,
             detalle: payment,
+            emailEnviado: false,
             //con el payment.id se puede obtener el comprobante de pago
 
             // linkDePago: payment.transaction_details.external_resource_url,
           });
 
-          enviarCorreo(pago);
+          if (!pago.emailEnviado) {
+            // enviarCorreo(pago);
+            await context.app.service("payments").patch(id_pago, {
+              emailEnviado: true,
+            });
+
+            enviarCorreo(pago);
+          }
+
+          //si el pago esta aprobado se
 
           const id_cupon = pago.id_cupon;
 
@@ -313,7 +323,7 @@ module.exports = (options = {}) => {
 
             //enviar email de rechazo
             let pago = await context.app.service("payments").get(id_pago);
-            enviarCorreo(pago);
+            // enviarCorreo(pago);
             // console.log('paymentNew', paymentNew);
           } catch (error) {
             console.log("error", error);

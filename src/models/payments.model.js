@@ -29,6 +29,7 @@ module.exports = function (app) {
       detalle: { type: Object, required: false },
       orderId: { type: String, required: false, unique: true },
       envio: { type: Object, required: false },
+      emailEnviado: { type: Boolean, required: false },
     },
     {
       timestamps: true,
