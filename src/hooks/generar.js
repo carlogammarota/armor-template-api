@@ -89,6 +89,8 @@ module.exports = (options = {}) => {
 
     let orderId = generateOrderId();
 
+    const costoEnvio = 2000;
+
     // Crear pago en el servicio de pagos
     let res = await context.app.service("payments").create({
       email: email,
