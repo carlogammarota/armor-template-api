@@ -78,6 +78,12 @@ async function enviarCorreo(pago) {
       .replace("[fecha_entrega]", pago.envio.diaEnvio)
       .replace("[hora_entrega]", pago.envio.diaEnvio);
 
+    //si el total supero los 15.000 el envio es gratis
+    if (pago.total > 15000) {
+      customizedHtml = customizedHtml.replace("[envio]", 0 + "ARS");
+      customizedHtml = customizedHtml.replace("[total]", pago.total);
+    }
+
     // Detalles del correo electrónico
     const mailOptions = {
       from: "carlo.gammarota@gmail.com",
