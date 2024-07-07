@@ -103,6 +103,7 @@ module.exports = (options = {}) => {
       precioEnvio: costoEnvio,
       envio: context.result.envio,
       cupon: context.result.cupon,
+      emailEnviado: false,
     });
 
     let id_pago = res._id;
