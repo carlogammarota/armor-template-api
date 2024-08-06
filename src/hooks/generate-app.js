@@ -9,12 +9,20 @@ module.exports = (options = {}) => {
     const frontend_port = context.data.ports.frontend_port;
     const subdomain = context.data.subdomain;
 
+    //id de la aplicacion
+    const result = context.result;
+    console.log("(feathers): ID de Aplicacion ", result);
+
+  
+
     try {
-      const createApp = await axios.post("http://64.227.76.217:3131/create-app", {
+      const createApp = await axios.post("https://docker.armortemplate.site/create-app", {
         //hay que enviarle con contraseña (si se vende como template ocultar esto)
         api_port,
         frontend_port,
         subdomain,
+        result,
+        password: "luci2024",
       });
       console.log("createApp", createApp.data);
       context.data.link = createApp.data.link;

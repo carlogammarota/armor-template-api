@@ -12,6 +12,7 @@ module.exports = (options = {}) => {
           
       const data = context.data;
       context.data.link = "https://"+data.subdomain+".armortemplate.site";
+      context.data.status = "creating";
 
       // const frontend_port = 2002
       // const api_port = 1002
@@ -43,10 +44,12 @@ module.exports = (options = {}) => {
           const setPorts = await context.app.service("ports").create({
             api_port: port_api,
             frontend_port: port_frontend,
+            subdomain: data.subdomain,
           });
           console.log("setPorts", setPorts);
           context.data.ports_id = setPorts._id;
           context.data.ports = setPorts;  
+        
         } catch (error) {
           console.log("error", error);
           return {

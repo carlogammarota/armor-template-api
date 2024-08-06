@@ -19,6 +19,7 @@ module.exports = function (app) {
     plugins: { type: Array, required: true },
     user: { type: Object, required: true },
     link: { type: String, required: false },
+    status: { type: String, required: false },
   }, {
     timestamps: true
   });

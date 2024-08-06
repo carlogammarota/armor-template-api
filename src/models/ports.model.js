@@ -10,6 +10,7 @@ module.exports = function (app) {
     // text: { type: String, required: true }
     api_port: { type: Number, unique: true },
     frontend_port: { type: Number, unique: true },
+    subdomain: { type: String, unique: true },
   }, {
     timestamps: true
   });
