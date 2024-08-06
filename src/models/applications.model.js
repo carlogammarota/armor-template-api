@@ -16,10 +16,11 @@ module.exports = function (app) {
     title: { type: String, required: true },
     description: { type: String, required: true },
     theme: { type: String, required: true },
-    plugins: { type: Array, required: true },
+    plugins: { type: Object, required: true },
     user: { type: Object, required: true },
     link: { type: String, required: false },
     status: { type: String, required: false },
+
   }, {
     timestamps: true
   });
