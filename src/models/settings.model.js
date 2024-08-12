@@ -44,6 +44,10 @@ module.exports = function (app) {
     meta: { type: Object, required: true },
     siteViews: { type: Object, required: false },
     adminViews: { type: Object, required: false },
+    primer_contenido_bloque: { type: String, required: false },
+    segundo_contenido_bloque: { type: String, required: false },
+    tercer_contenido_bloque: { type: String, required: false },
+    cuarto_contenido_bloque: { type: String, required: false },
     
 
   }, {
