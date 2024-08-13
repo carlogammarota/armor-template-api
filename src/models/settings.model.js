@@ -48,6 +48,13 @@ module.exports = function (app) {
     segundo_contenido_bloque: { type: String, required: false },
     tercer_contenido_bloque: { type: String, required: false },
     cuarto_contenido_bloque: { type: String, required: false },
+    //fecha_creacion
+    fecha_creacion: { type: Date, required: false },
+    fecha_actualizacion: { type: Date, required: false },
+    //boolean
+    config: { type: Object, required: false },
+    
+
     
 
   }, {
