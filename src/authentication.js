@@ -34,7 +34,7 @@ module.exports = (app) => {
       {
         clientID:
           "306480163966-cg1ckllqu7ru7fbegrn7m3t5tjt121km.apps.googleusercontent.com",
-        clientSecret: "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",
+        clientSecret: "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",
         callbackURL: "https://api.armortemplate.site/auth/google/callback",
         passReqToCallback: true,
       },
