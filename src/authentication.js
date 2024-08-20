@@ -33,9 +33,9 @@ module.exports = (app) => {
     new GoogleStrategy(
       {
         clientID:
-          "656315351559-ojl88d31oaa3jeuhrafjensqee3pnab6.apps.googleusercontent.com",
-        clientSecret: "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",
-        callbackURL: "https://api.picoai.app/auth/google/callback",
+          "306480163966-cg1ckllqu7ru7fbegrn7m3t5tjt121km.apps.googleusercontent.com",
+        clientSecret: "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",
+        callbackURL: "https://api.armortemplate.site/auth/google/callback",
         passReqToCallback: true,
       },
       async function (request, accessToken, refreshToken, profile, done) {
