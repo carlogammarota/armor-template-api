@@ -116,7 +116,7 @@ module.exports = (app) => {
     (req, res) => {
       // Redirige al éxito y pasa el token JWT
       res.redirect(
-        `https://picoai.app/autologin?token=${req.user.token}&user_id=${req.user._id}`
+        `https://armortemplate.site/autologin?token=${req.user.token}&user_id=${req.user._id}`
         // `http://localhost:9999/autologin?token=${req.user.token}&user_id=${req.user._id}`
       );
     }
