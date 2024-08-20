@@ -36,6 +36,8 @@
       city: { type: String },
       image: { type: String },
       content: { type: String },
+      googleId: { type: String },
+      displayName: { type: String },
 
     }, {
       timestamps: true

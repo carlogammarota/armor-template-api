@@ -8,6 +8,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const session = require("express-session");
 const path = require("path");
+const { permission } = require("process");
 
 module.exports = (app) => {
   const authentication = new AuthenticationService(app);
@@ -57,11 +58,9 @@ module.exports = (app) => {
               googleId: profile.id,
               displayName: profile.displayName,
               email: profile.email,
-              imagen: profile.picture,
-              requests: 200,
-              credits: 40,
+              image: profile.picture,
               name: profile.displayName,
-              verified: true,
+              permissions: ['customer'],
             });
           } else {
             // Si el usuario ya existe, lo usa
