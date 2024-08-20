@@ -25,7 +25,7 @@
     const { Schema } = mongooseClient;
     const schema = new Schema({
       email: { type: String, unique: true, lowercase: true, required: true },
-      password: { type: String, required: true },
+      password: { type: String, required: false },
       name: { type: String },
       permissions: { type: Array, required: true},
       name: { type: String },
