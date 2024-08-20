@@ -33,8 +33,8 @@ module.exports = (app) => {
     new GoogleStrategy(
       {
         clientID:
-          "306480163966-cg1ckllqu7ru7fbegrn7m3t5tjt121km.apps.googleusercontent.com",
-        clientSecret: "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",
+          "581198273846-ddc8u98cf5g86rskj9c011oai3sgtbur.apps.googleusercontent.com",
+        clientSecret: "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",
         callbackURL: "https://api.armortemplate.site/auth/google/callback",
         passReqToCallback: true,
       },
