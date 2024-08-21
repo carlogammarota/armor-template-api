@@ -29,6 +29,6 @@
       "passwordField": "password"
     }
   },
-  "mongodb": "mongodb+srv://carlogammarota:ZfAdZxtHFY7gwa6I@armortemplate.erwby.mongodb.net/argentina-33?authSource=admin"
+  "mongodb": "mongodb+srv://admin-web:stuart@cluster0.podle1o.mongodb.net/themeforest-003?authSource=admin"
   
 }
