@@ -53,6 +53,7 @@ module.exports = function (app) {
     fecha_actualizacion: { type: Date, required: false },
     //boolean
     config: { type: Object, required: false },
+    subdomain: { type: String, required: false },
     
 
     
