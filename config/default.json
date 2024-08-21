@@ -1,6 +1,7 @@
+
 {
   "host": "localhost",
-  "port": 2828,
+  "port": 1313,
   "public": "../public/",
   "paginate": {
     "default": 10,
@@ -28,6 +29,6 @@
       "passwordField": "password"
     }
   },
-  "mongodb": "mongodb+srv://admin-web:stuart@cluster0.podle1o.mongodb.net/themeforest-003"
+  "mongodb": "mongodb+srv://carlogammarota:ZfAdZxtHFY7gwa6I@armortemplate.erwby.mongodb.net/argentina-33?authSource=admin"
   
 }
