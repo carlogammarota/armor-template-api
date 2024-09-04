@@ -39,7 +39,22 @@ module.exports = (app) => {
         callbackURL: "https://api.armortemplate.site/auth/google/callback",
         passReqToCallback: true,
       },
+
+
+     
+
+
       async function (request, accessToken, refreshToken, profile, done) {
+
+        //subdomain
+        const subdomain = request.headers.host.split('.')[0];
+
+        console.log("subdomain", subdomain);
+
+        if(subdomain === 'api') {
+          console.log('no hay subdominio, es la api original', subdomain);
+        }
+
         try {
           const userService = app.service("users");
 
