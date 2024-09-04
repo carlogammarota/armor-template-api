@@ -28,7 +28,6 @@
       password: { type: String, required: false },
       name: { type: String },
       permissions: { type: Array, required: true},
-      name: { type: String },
       firstname: { type: String },
       lastname: { type: String },
       telephone: { type: String },
