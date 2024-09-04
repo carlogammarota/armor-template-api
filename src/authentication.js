@@ -52,8 +52,8 @@ module.exports = (app) => {
         console.log("subdomain", subdomain);
 
         if(subdomain === 'api') {
-          console.log('no hay subdominio, es la api original', subdomain);
-        }
+          console.log('Original >>', subdomain);
+        
 
         try {
           const userService = app.service("users");
@@ -97,6 +97,7 @@ module.exports = (app) => {
           return done(null, user);
         } catch (error) {
           return done(error);
+        }
         }
       }
     )
