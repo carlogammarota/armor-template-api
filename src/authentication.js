@@ -29,6 +29,8 @@ module.exports = (app) => {
   app.use(passport.initialize());
   app.use(passport.session());
 
+
+
   // Configuración de Passport.js
   passport.use(
     new GoogleStrategy(
@@ -40,6 +42,11 @@ module.exports = (app) => {
         passReqToCallback: true,
       },
       async function (request, accessToken, refreshToken, profile, done) {
+
+
+
+
+
         try {
           const userService = app.service("users");
 
@@ -112,7 +119,12 @@ module.exports = (app) => {
     passport.authenticate("google", {
       failureRedirect: "/auth/google/failure",
     }),
-    (req, res) => {
+    async (req, res) => {
+
+
+      const subdomain = req.headers.host.split('.')[0];
+      console.log('subdomain', subdomain);
+
       // Redirige al éxito y pasa el token JWT
       res.redirect(
         `https://armortemplate.site/autologin?token=${req.user.token}&user_id=${req.user._id}`
