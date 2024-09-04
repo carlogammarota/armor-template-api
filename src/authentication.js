@@ -122,8 +122,8 @@ module.exports = (app) => {
     async (req, res) => {
 
 
-      const subdomain = req.headers.host.split('.')[0];
-      console.log('subdomain', subdomain);
+      // const subdomain = req.headers.host.split('.')[0];
+      // console.log('subdomain', subdomain);
 
       // Redirige al éxito y pasa el token JWT
       res.redirect(
