@@ -134,51 +134,6 @@ module.exports = (app) => {
   // app.get("/", (req, res) => {
   //   res.sendFile(path.join(__dirname, "../public/index.html"));
   // });
-  const passwordSecret = async (req, res, next) => {
-    // La contraseña maestra llega con el email y tiene que ser "super_secret_password_123", si no, no se autentica.
-    const { superPassword } = req.body;
-    console.log(superPassword);
-    if (superPassword === "super_secret_password_123") {
-      return next();  // Proceed to the next middleware or route handler.
-    }
-  
-    res.status(401).send("Unauthorized");
-    return;  // Stop further execution.
-  };
-  
-  // Super password para autenticar con solo el usuario.
-  app.post("/superpassword", passwordSecret, async (req, res) => {
-    const userService = app.service("users");
-    const { email, password } = req.body;
-  
-    try {
-      const result = await userService.find({
-        query: {
-          email,
-          // password,
-        },
-      });
-  
-      if (result.total === 0) {
-        return res.status(401).send("Unauthorized");
-      } else {
-        const user = result.data[0];
-        const payload = { userId: user._id.toString() };
-        const jwt = await app
-          .service("authentication")
-          .createAccessToken(payload, {
-            subject: user._id.toString(),
-            issuer: "feathers",
-          });
-  
-        return res.send({ token: jwt, user });
-      }
-    } catch (error) {
-      return res.status(500).send("Internal Server Error");
-    }
-  });
-  
-
 
 app.use("/authentication", authentication);
   app.configure(expressOauth());
