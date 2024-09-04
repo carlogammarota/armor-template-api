@@ -30,6 +30,13 @@ module.exports = (app) => {
   app.use(passport.session());
 
 
+  //getSubdomain
+
+  async function getSubdomain(req, res, next) {
+    const subdomain = req.headers.host.split('.')[0];
+    req.subdomain = subdomain;
+    next();
+  }
 
   // Configuración de Passport.js
   passport.use(
@@ -44,7 +51,7 @@ module.exports = (app) => {
       async function (request, accessToken, refreshToken, profile, done) {
 
 
-
+        
 
 
         try {
@@ -119,12 +126,7 @@ module.exports = (app) => {
     passport.authenticate("google", {
       failureRedirect: "/auth/google/failure",
     }),
-    async (req, res) => {
-
-
-      // const subdomain = req.headers.host.split('.')[0];
-      // console.log('subdomain', subdomain);
-
+    (req, res) => {
       // Redirige al éxito y pasa el token JWT
       res.redirect(
         `https://armortemplate.site/autologin?token=${req.user.token}&user_id=${req.user._id}`
