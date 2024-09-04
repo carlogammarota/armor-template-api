@@ -52,9 +52,9 @@ module.exports = (options = {}) => {
         
         } catch (error) {
           console.log("error", error);
-          return {
-            message: "Error al crear la aplicación",
-          }
+          //devolver error de feathers
+          throw new Error("No se pudo asignar los puertos");
+          
         }
 
         return context

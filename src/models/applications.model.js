@@ -11,7 +11,8 @@ module.exports = function (app) {
   const { Schema } = mongooseClient;
   const schema = new Schema({
     // hostPort: { type: Number },
-    subdomain: { type: String, unique: true },
+    // subdomain: { type: String, unique: true }, maximo 15 caracteres
+    subdomain: { type: String, required: true, unique: true, maxlength: 15, minlength: 3 },
     logo: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },

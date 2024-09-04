@@ -13,6 +13,7 @@ module.exports = function (app) {
     image: { type: String, required: true },
     slug: { type: String, required: false },
     metaData: { type: Object, required: false },
+    subcategories: { type: Array, required: false },
   }, {
     timestamps: true
   });

@@ -54,6 +54,11 @@ module.exports = function (app) {
     //boolean
     config: { type: Object, required: false },
     subdomain: { type: String, required: false },
+
+    defaultCategory: { type: String, required: true },
+
+    //nameservers para configurar el dominio
+    nameservers: { type: Object, required: false },
     
 
     

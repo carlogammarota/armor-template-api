@@ -1,22 +1,51 @@
-const { authenticate } = require('@feathersjs/authentication').hooks;
+const { authenticate } = require("@feathersjs/authentication").hooks;
 
-const portCount = require('../../hooks/port-count');
+const portCount = require("../../hooks/port-count");
 
-const createApp = require('../../hooks/create-app');
+const createApp = require("../../hooks/create-app");
 
-const deletePorts = require('../../hooks/delete-ports');
+const deletePorts = require("../../hooks/delete-ports");
 
-const generateApp = require('../../hooks/generate-app');
+const generateApp = require("../../hooks/generate-app");
+
+const checkPermissions = require("feathers-permissions");
 
 module.exports = {
   before: {
     // all: [ authenticate('jwt') ],
     find: [],
     get: [],
-    create: [authenticate('jwt'), portCount(), createApp()],
-    update: [authenticate('jwt')],
-    patch: [authenticate('jwt')],
-    remove: [authenticate('jwt')]
+    create: [
+      authenticate("jwt"),
+      checkPermissions({
+        roles: ["subscribe"],
+      }),
+      portCount(),
+      createApp(),
+    ],
+    update: [
+      authenticate("jwt"),
+      checkPermissions({
+        // roles: ["admin"],
+        //subscribe or admin
+        roles: ["admin", "subscribe"],
+
+
+
+      }),
+    ],
+    patch: [
+      authenticate("jwt"),
+      checkPermissions({
+        roles: ["admin"],
+      }),
+    ],
+    remove: [
+      authenticate("jwt"),
+      checkPermissions({
+        roles: ["admin"],
+      }),
+    ],
   },
 
   after: {
@@ -26,7 +55,7 @@ module.exports = {
     create: [generateApp()],
     update: [],
     patch: [],
-    remove: []
+    remove: [],
   },
 
   error: {
@@ -36,6 +65,6 @@ module.exports = {
     // create: [deletePorts()],
     update: [],
     patch: [],
-    remove: []
-  }
+    remove: [],
+  },
 };
