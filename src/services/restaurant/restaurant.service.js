@@ -9,6 +9,15 @@ module.exports = function (app) {
     paginate: app.get('paginate')
   };
 
+  app.get('/restaurant/types', async (req, res) => {
+    //recorrer todos los restaurantes que son los platos y obtener los tipos
+    const restaurantService = app.service('restaurant');
+    const restaurants = await restaurantService.find();
+    const types = restaurants.data.map(restaurant => restaurant.type);
+    const uniqueTypes = [...new Set(types)];
+    res.send(uniqueTypes);
+  });
+
   // Initialize our service with any options it requires
   app.use('/restaurant', new Restaurant(options, app));
 
