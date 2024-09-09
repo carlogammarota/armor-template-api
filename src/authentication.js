@@ -8,7 +8,6 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const session = require("express-session");
 const path = require("path");
-const { permission } = require("process");
 
 module.exports = (app) => {
   const authentication = new AuthenticationService(app);
@@ -29,6 +28,19 @@ module.exports = (app) => {
   app.use(passport.initialize());
   app.use(passport.session());
 
+
+  async function getSubdomain(req, res, next) {
+    console.log("req.headers");
+    
+    //ejemplo de uso.
+    // localhost:2828/auth/google?subdominio=la-quiaca
+
+    const subdomain = req.query.subdominio
+    console.log("subdomain", subdomain);
+    req.subdomain = subdomain;
+    next();
+  }
+
   // Configuración de Passport.js
   passport.use(
     new GoogleStrategy(
@@ -36,6 +48,7 @@ module.exports = (app) => {
         clientID:
           "581198273846-ddc8u98cf5g86rskj9c011oai3sgtbur.apps.googleusercontent.com",
         clientSecret: "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",
+
         callbackURL: "https://api.armortemplate.site/auth/google/callback",
         passReqToCallback: true,
       },
@@ -47,12 +60,12 @@ module.exports = (app) => {
       async function (request, accessToken, refreshToken, profile, done) {
 
         //subdomain
-        const subdomain = request.headers.host.split('.')[0];
 
-        console.log("subdomain", subdomain);
 
-        if(subdomain === 'api') {
-          console.log('Original >>', subdomain);
+
+
+        if(true) {
+
         
 
         try {
@@ -99,6 +112,8 @@ module.exports = (app) => {
           return done(error);
         }
         }
+
+
       }
     )
   );
@@ -118,10 +133,17 @@ module.exports = (app) => {
   });
 
   // Rutas de autenticación
+  // app.get(
+  //   "/auth/google",
+  //   console.log("subdomain"),
+  //   passport.authenticate("google", { scope: ["email", "profile"] })
+  // );
+  //el subdominio va a llegar en en el query
   app.get(
     "/auth/google",
+    getSubdomain,
     passport.authenticate("google", { scope: ["email", "profile"] })
-  );
+  ); 
 
   app.get(
     "/auth/google/callback",
@@ -129,11 +151,21 @@ module.exports = (app) => {
       failureRedirect: "/auth/google/failure",
     }),
     (req, res) => {
-      // Redirige al éxito y pasa el token JWT
-      res.redirect(
-        `https://armortemplate.site/autologin?token=${req.user.token}&user_id=${req.user._id}`
-        // `http://localhost:9999/autologin?token=${req.user.token}&user_id=${req.user._id}`
-      );
+      // const subdomain = req.subdomain
+
+      if(true) {
+        // Redirige al éxito y pasa el token JWT
+        res.redirect(
+          `https://armortemplate.site/autologin?token=${req.user.token}&user_id=${req.user._id}`
+          // `http://localhost:9999/autologin?token=${req.user.token}&user_id=${req.user._id}`
+          );
+      };
+
+      // if(subdomain != 'api') {
+      //   res.redirect(
+      //     `https://${subdomain}.armortemplate.site/autologin?token=${req.user.token}&user_id=${req.user._id}`);
+      // }
+
     }
   );
 
