@@ -59,6 +59,11 @@ module.exports = function (app) {
 
     //nameservers para configurar el dominio
     nameservers: { type: Object, required: false },
+
+
+    //restaurant
+    restaurant: { type: Object, required: false },
+
     
 
     
