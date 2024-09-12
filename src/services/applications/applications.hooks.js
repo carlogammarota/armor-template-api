@@ -10,6 +10,8 @@ const generateApp = require("../../hooks/generate-app");
 
 const checkPermissions = require("feathers-permissions");
 
+const removeApp = require("../../hooks/remove-app");
+
 module.exports = {
   before: {
     // all: [ authenticate('jwt') ],
@@ -37,14 +39,15 @@ module.exports = {
     patch: [
       authenticate("jwt"),
       checkPermissions({
-        roles: ["admin"],
+        roles: ["subscribe"],
       }),
     ],
     remove: [
       authenticate("jwt"),
       checkPermissions({
-        roles: ["admin"],
+        roles: ["subscribe"],
       }),
+      removeApp(),
     ],
   },
 
