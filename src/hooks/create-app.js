@@ -13,6 +13,15 @@ module.exports = (options = {}) => {
       const data = context.data;
       context.data.link = "https://"+data.subdomain+".armortemplate.site";
       context.data.status = "creating";
+      context.data.restaurant = {
+        "active": true,
+        "forceHome": true,
+        "title": "Menu Restaurant by Armor Template",
+        "instagram": "",
+        "location": "",
+        "telephone": 0,
+        "email": ""
+    }
 
       // const frontend_port = 2002
       // const api_port = 1002
