@@ -26,7 +26,7 @@ module.exports = (options = {}) => {
       });
       console.log("createApp", createApp.data);
       context.data.link = createApp.data.link;
-      context.data.result = result;
+      // context.data.result = result;
       return context;
     } catch (error) {
       console.log("error", error);

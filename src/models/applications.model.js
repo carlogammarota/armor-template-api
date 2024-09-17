@@ -21,7 +21,7 @@ module.exports = function (app) {
     user: { type: Object, required: true },
     link: { type: String, required: false },
     status: { type: String, required: false },
-    restaurant: { type: Object, required: false },
+    restaurant: { type: Object, required: true },
 
   }, {
     timestamps: true
