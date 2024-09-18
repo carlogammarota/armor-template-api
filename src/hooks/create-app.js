@@ -24,14 +24,18 @@ module.exports = (options = {}) => {
     }
 
 
-    let settings = await axios.get("https://api.armortemplate.site/settings/");
-    settings = settings.data[0];
+    console.log("application", application);
 
-    console.log("settings", settings);
-    
-    const version = settings.version;
+    let data = await axios.get("https://api.armortemplate.site/settings/", {
+        query: {
+          $limit: 1,
+        }
+    });
 
-    context.data.version = version;
+    let setting = data.data
+    setting = setting.data[0];
+
+    context.data.version = setting.version;
 
       // const frontend_port = 2002
       // const api_port = 1002
