@@ -29,6 +29,8 @@ module.exports = (options = {}) => {
     let setting = data.data
     setting = setting.data[0];
 
+
+
     
 
 
@@ -36,6 +38,17 @@ module.exports = (options = {}) => {
     
     application.version = setting.version;
 
+
+    //actualizar también la versión de la aplicación
+
+    let setApplicationVersion = await axios.patch(
+        `https://api.armortemplate.site/applications/${id}`,
+        {
+            version: setting.version
+        }
+        );
+
+        console.log("setApplicationVersion", setApplicationVersion);
 
 
     const subdomain = application.subdomain;
