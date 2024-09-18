@@ -77,13 +77,7 @@ app.configure(mongoose);
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
-app.configure(authentication({
-  secret: 'your-secret',
-  strategies: ['jwt'],
-  jwt: {
-    expiresIn: '10y'  // Aquí configuras el tiempo de expiración (por ejemplo, '10y' para 10 años)
-  }
-}));
+app.configure(authentication);
 // Set up our services (see `services/index.js`)
 app.configure(services);
 // Set up event channels (see channels.js)
