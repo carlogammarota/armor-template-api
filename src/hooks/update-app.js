@@ -20,6 +20,13 @@ module.exports = (options = {}) => {
 
     console.log("application", application);
 
+    let settings = await axios.get("https://api.armortemplate.site/settings/");
+    settings = settings.data[0];
+
+    console.log("settings", settings);
+    
+    application.version = settings.version;
+
 
 
     const subdomain = application.subdomain;

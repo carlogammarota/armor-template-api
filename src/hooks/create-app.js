@@ -23,6 +23,16 @@ module.exports = (options = {}) => {
         "email": ""
     }
 
+
+    let settings = await axios.get("https://api.armortemplate.site/settings/");
+    settings = settings.data[0];
+
+    console.log("settings", settings);
+    
+    const version = settings.version;
+
+    context.data.version = version;
+
       // const frontend_port = 2002
       // const api_port = 1002
 

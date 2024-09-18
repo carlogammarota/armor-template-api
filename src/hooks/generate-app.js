@@ -11,7 +11,12 @@ module.exports = (options = {}) => {
 
     //id de la aplicacion
     const result = context.result;
-    console.log("(feathers): ID de Aplicacion ", result);
+
+
+   
+
+    
+
 
   
 

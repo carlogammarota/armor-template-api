@@ -22,7 +22,7 @@ module.exports = function (app) {
     link: { type: String, required: false },
     status: { type: String, required: false },
     restaurant: { type: Object, required: true },
-    version: { type: String, required: true },
+    version: { type: String, required: false },
 
   }, {
     timestamps: true
