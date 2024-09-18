@@ -28,11 +28,7 @@ module.exports = (options = {}) => {
 
     let setting = data.data
     setting = setting.data[0];
-    
-    console.log("setting", setting);
 
-
-    return 0
     
 
 
