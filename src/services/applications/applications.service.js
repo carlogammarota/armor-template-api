@@ -24,8 +24,8 @@ module.exports = function (app) {
 
   // Initialize our service with any options it requires
   app.use('/applications', new Applications(options, app), (req, res, next) => {
-    console.log("service")
-    next()
+    // console.log("service")
+    next();
   });
 
   // Get our initialized service so that we can register hooks

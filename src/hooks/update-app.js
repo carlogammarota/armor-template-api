@@ -10,44 +10,50 @@ module.exports = (options = {}) => {
 
     const id = context.id;
 
-    // https://api.armortemplate.com/applications/
+    // console.log("update-app", context);
 
-    const application = await axios.get(
+    let application = await axios.get(
       `https://api.armortemplate.site/applications/${id}`
     );
 
-    const subdomain = application.data.subdomain;
+    application = application.data;
 
-    const userOwner = application.data.user._id;
+    console.log("application", application);
+
+
+
+    const subdomain = application.subdomain;
+
+    console.log("subdomain", subdomain);
+
+
+    const userOwner = application.user._id;
 
     const userApp = context.params.user._id;
 
     const permissions = context.params.user.permissions;
 
     //si no es el dueño del app, devolver error al menos que tebga permisos de admin
-    if (userOwner != userApp && permissions.indexOf("admin") == -1) {
-      throw new Error("No tienes permisos para eliminar esta aplicación");
-    } else {
-      const deleteApp = await axios.post(
-        `https://docker.armortemplate.site/delete-application`,
-        {
-          subdomain: subdomain,
-          password: "luci2024",
-          delete_database: true,
-        }
-      );
 
-      console.log("deleteApp", deleteApp);
+    if (userOwner != userApp && permissions.indexOf("admin") == -1) {
+      throw new Error("No tienes permisos para actualizar esta aplicación");
     }
 
+
+
+    const updateApp = await axios.post(
+      `https://docker.armortemplate.site/update-app`,
+      {
+        subdomain: subdomain,
+        password: "luci2024",
+      }
+    );
+
+    console.log("updateApp", updateApp);
+
     context.result = {
-      message: "Aplicación eliminada",
-
+      message: "Aplicación actualizada",
     };
-
-    // return {
-    //   message: "Aplicación eliminada",
-    // }
 
     return context;
   };

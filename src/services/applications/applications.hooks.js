@@ -12,6 +12,8 @@ const checkPermissions = require("feathers-permissions");
 
 const removeApp = require("../../hooks/remove-app");
 
+const updateApp = require("../../hooks/update-app");
+
 module.exports = {
   before: {
     // all: [ authenticate('jwt') ],
@@ -31,10 +33,8 @@ module.exports = {
         // roles: ["admin"],
         //subscribe or admin
         roles: ["admin", "subscribe"],
-
-
-
       }),
+      updateApp(),
     ],
     patch: [
       authenticate("jwt"),
