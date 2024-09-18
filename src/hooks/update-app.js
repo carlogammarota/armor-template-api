@@ -20,7 +20,12 @@ module.exports = (options = {}) => {
 
     console.log("application", application);
 
-    let settings = await axios.get("https://api.armortemplate.site/settings/");
+    let settings = await axios.get("https://api.armortemplate.site/settings/", {
+        query: {
+          $limit: 1,
+        }
+    });
+    console.log("settings", settings);
     settings = settings.data[0];
 
     console.log("settings", settings);

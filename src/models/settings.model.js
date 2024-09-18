@@ -64,7 +64,7 @@ module.exports = function (app) {
     //restaurant
     restaurant: { type: Object, required: false },
 
-    version: { type: String, required: true },
+    version: { type: String, required: false },
 
     
 
