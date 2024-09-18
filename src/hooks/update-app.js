@@ -25,10 +25,12 @@ module.exports = (options = {}) => {
           $limit: 1,
         }
     });
-    console.log("settings", data);
+    console.log("settings", data.data);
     data = data.data[0].settings;
 
-    console.log("settings", data);
+    return 0
+
+    // console.log("settings", data);
     
     application.version = data.version;
 
