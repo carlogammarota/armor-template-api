@@ -24,7 +24,7 @@ module.exports = (options = {}) => {
     }
 
 
-    console.log("application", application);
+
 
     let sett = await axios.get("https://api.armortemplate.site/settings/", {
         query: {
