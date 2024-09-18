@@ -32,7 +32,7 @@ module.exports = {
       checkPermissions({
         // roles: ["admin"],
         //subscribe or admin
-        roles: ["admin", "subscribe"],
+        roles: [ "subscribe"],
       }),
       updateApp(),
     ],
