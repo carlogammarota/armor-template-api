@@ -26,13 +26,13 @@ module.exports = (options = {}) => {
 
     console.log("application", application);
 
-    let data = await axios.get("https://api.armortemplate.site/settings/", {
+    let sett = await axios.get("https://api.armortemplate.site/settings/", {
         query: {
           $limit: 1,
         }
     });
 
-    let setting = data.data
+    let setting = sett.data
     setting = setting.data[0];
 
     context.data.version = setting.version;
