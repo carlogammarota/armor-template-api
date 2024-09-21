@@ -29,11 +29,11 @@ module.exports = {
     ],
     update: [
       authenticate("jwt"),
-      checkPermissions({
-        // roles: ["admin"],
-        //subscribe or admin
-        roles: [ "subscribe"],
-      }),
+      // checkPermissions({
+      //   // roles: ["admin"],
+      //   //subscribe or admin
+      //   roles: [ "subscribe"],
+      // }),
       updateApp(),
     ],
     patch: [

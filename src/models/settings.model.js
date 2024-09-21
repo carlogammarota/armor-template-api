@@ -66,6 +66,16 @@ module.exports = function (app) {
 
     version: { type: String, required: false },
 
+
+    //offer banner, es el banner que esta en el home
+    offerBanner: {
+      type: Object, required: false
+    },
+    layout: { type: String, required: true },
+
+    
+
+
     
 
     

@@ -1,15 +1,7 @@
-// Use this hook to manipulate incoming or outgoing data.
-// For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 const axios = require("axios");
-// eslint-disable-next-line no-unused-vars
+
 module.exports = (options = {}) => {
   return async (context) => {
-    // console.log("create-app", context.data)
-
-    // return {
-
-    //hacer logica solo dejar crear si el usuario tiene el plan Premium
-
     const data = context.data;
     context.data.link = "https://" + data.subdomain + ".armortemplate.site";
     context.data.status = "creating";
@@ -22,50 +14,75 @@ module.exports = (options = {}) => {
       telephone: 0,
       email: "",
     };
-
+  
     context.data.plugins = {
       mercadopago: {
         mercadopago_token: "",
       },
     };
-
+  
     let sett = await axios.get("https://api.armortemplate.site/settings/", {
       query: {
         $limit: 1,
       },
     });
-
+  
     let setting = sett.data;
     setting = setting.data[0];
-
     context.data.version = setting.version;
 
-    // const frontend_port = 2002
-    // const api_port = 1002
-
     try {
-      const port = await context.app.service("ports").find({
+      // Verifica si ya existe un puerto con el subdominio dado
+      const existingPort = await context.app.service("ports").find({
         query: {
-          $limit: 100,
-          // $sort: {
-          //   api_port: 1,
-          // },
+          subdomain: data.subdomain,
+          $limit: 1,
         },
       });
-      console.log("port", port.total);
-      // if (port.total == 0) {
-      //   console.log("No hay puertos");
-      //   return {
-      //     message: "No hay puertos disponibles",
-      //   };
-      // }
-      const port_api = port.total + 1002;
-      const port_frontend = port.total + 2002;
+
+      // Si el subdominio ya existe, lanza un error
+      if (existingPort.total > 0 && existingPort.data.length > 0) {
+        throw new Error(`El subdominio '${data.subdomain}' ya está en uso.`);
+      }
+
+      // Obtén todos los puertos ya utilizados
+      const ports = await context.app.service("ports").find({
+        query: {
+          $limit: 1000, // Obtenemos una gran cantidad para verificar muchos puertos
+        },
+      });
+
+      // Filtra los puertos ya en uso para buscar dentro de los rangos deseados
+      const usedApiPorts = ports.data.map((p) => p.api_port);
+      const usedFrontendPorts = ports.data.map((p) => p.frontend_port);
+
+      // Función para encontrar un puerto libre en un rango
+      const findFreePort = (start, end, usedPorts) => {
+        for (let i = start; i <= end; i++) {
+          if (!usedPorts.includes(i)) {
+            return i;
+          }
+        }
+        return null; // Si no se encuentra puerto libre
+      };
+
+      // Busca un puerto libre en el rango 1000-1999 para la API
+      const port_api = findFreePort(1000, 1999, usedApiPorts);
+      if (!port_api) {
+        throw new Error("No hay puertos API disponibles en el rango 1000-1999");
+      }
+
+      // Busca un puerto libre en el rango 2000-2999 para el frontend
+      const port_frontend = findFreePort(2000, 2999, usedFrontendPorts);
+      if (!port_frontend) {
+        throw new Error("No hay puertos frontend disponibles en el rango 2000-2999");
+      }
 
       console.log("port_api", port_api);
       console.log("port_frontend", port_frontend);
 
       try {
+        // Crea la entrada de puertos en la base de datos
         const setPorts = await context.app.service("ports").create({
           api_port: port_api,
           frontend_port: port_frontend,
@@ -76,49 +93,13 @@ module.exports = (options = {}) => {
         context.data.ports = setPorts;
       } catch (error) {
         console.log("error", error);
-        //devolver error de feathers
         throw new Error("No se pudo asignar los puertos");
       }
 
       return context;
     } catch (error) {
-      console.log("error", error);
-      return {
-        message: "Error al crear la aplicación",
-      };
-      // throw error; // Lanza una excepción si hay un error.
+      console.log("Error:", error.message);
+      throw new Error("Error al crear la aplicación: " + error.message);
     }
-
-    return "dev";
-
-    console.log("Create App");
-
-    // try {
-    //   const response = await axios.post(
-    //     "http://64.227.76.217:3131/create-app",
-    //     //IMPORTANTE: faltan mandar contraseña
-    //     {
-    //       "subdomain": "ibot-design",
-    //       "api_port": 1001,
-    //       "frontend_port": 2001
-    //     }
-    //   );
-    // } catch (error) {
-    //   console.log("error", error);
-    //   return {
-    //     message: "Error al crear la aplicación",
-    //   }
-    //   // throw error; // Lanza una excepción si hay un error.
-    // }
-
-    // return context
-    // // await
-    // } catch (error) {
-    //   console.log("error", error);
-    //   return {
-    //     message: "Error al crear la aplicación",
-    //   }
-    //   // throw error; // Lanza una excepción si hay un error.
-    // }
   };
 };
