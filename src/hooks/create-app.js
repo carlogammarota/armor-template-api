@@ -13,6 +13,8 @@ module.exports = (options = {}) => {
       location: "",
       telephone: 0,
       email: "",
+      background_image: "https://armortemplate.site/images/blanco-hojas-verdes.jpg",
+      banner_image: "https://armortemplate.site/images/zanahorias.jpg"
     };
   
     context.data.plugins = {

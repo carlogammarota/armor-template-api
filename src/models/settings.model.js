@@ -72,6 +72,9 @@ module.exports = function (app) {
       type: Object, required: false
     },
     layout: { type: String, required: true },
+    currency: { type: String, required: true },
+
+    
 
     
 
