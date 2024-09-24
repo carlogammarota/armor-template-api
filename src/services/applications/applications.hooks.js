@@ -14,6 +14,10 @@ const removeApp = require("../../hooks/remove-app");
 
 const updateApp = require("../../hooks/update-app");
 
+const restrictToOwner = require('../../hooks/restrict-to-owner-applications.js');
+
+const restrictTo_1_app = require('../../hooks/restrict-to-1-app.js');
+
 module.exports = {
   before: {
     // all: [ authenticate('jwt') ],
@@ -21,9 +25,11 @@ module.exports = {
     get: [],
     create: [
       authenticate("jwt"),
+      restrictTo_1_app(),
       checkPermissions({
         roles: ["subscribe"],
       }),
+
       portCount(),
       createApp(),
     ],
@@ -34,6 +40,7 @@ module.exports = {
       //   //subscribe or admin
       //   roles: [ "subscribe"],
       // }),
+      restrictToOwner(),
       updateApp(),
     ],
     patch: [
@@ -41,9 +48,11 @@ module.exports = {
       checkPermissions({
         roles: ["subscribe"],
       }),
+      restrictToOwner(),
     ],
     remove: [
       authenticate("jwt"),
+      restrictToOwner(),
       checkPermissions({
         roles: ["subscribe"],
       }),

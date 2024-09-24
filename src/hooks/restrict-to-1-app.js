@@ -1,0 +1,31 @@
+
+// eslint-disable-next-line no-unused-vars
+module.exports = (options = {}) => {
+    return async context => {
+        if (!context.params.user) {
+            throw new Error("No estas autenticado");
+        }
+
+
+        //si es admin lo deja pasar
+        if (context.params.user.permissions.includes("admin")) {
+            return context;
+        }
+        
+
+
+        //traer todas las aplicaciones del usuario, si tiene mas de 1 no lo deja pasar
+        const applications = await context.app.service("applications").find({
+            query: {
+                user: context.params.user._id
+            }
+        });
+
+        if (applications.total > 0) {
+            throw new Error("Ya tienes una aplicación");
+        }
+
+
+
+    };
+};

@@ -5,6 +5,8 @@ module.exports = (options = {}) => {
     const data = context.data;
     context.data.link = "https://" + data.subdomain + ".armortemplate.site";
     context.data.status = "creating";
+
+    //modelo restaurante default.
     context.data.restaurant = {
       active: true,
       forceHome: true,

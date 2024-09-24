@@ -1,21 +1,36 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
-
+const checkPermissions = require("feathers-permissions");
 module.exports = {
   before: {
     // all: [ authenticate('jwt') ],
     find: [],
     get: [],
     create: [
-      authenticate('jwt')
+      authenticate('jwt'),
+       checkPermissions({
+        roles: ["admin", "settings"],
+      }),
     ],
     update: [
-      authenticate('jwt')
+      authenticate('jwt'),
+       checkPermissions({
+        roles: ["admin", "settings"],
+      }),
+      
     ],
     patch: [
-      authenticate('jwt')
+      authenticate('jwt'),
+       checkPermissions({
+        roles: ["admin", "settings"],
+      }),
+      
     ],
     remove: [
-      authenticate('jwt')
+      authenticate('jwt'),
+       checkPermissions({
+        roles: ["admin", "settings"],
+      }),
+      
     ]
   },
 
