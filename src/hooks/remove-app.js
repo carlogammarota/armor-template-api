@@ -13,7 +13,7 @@ module.exports = (options = {}) => {
     // https://api.armortemplate.com/applications/
 
     const application = await axios.get(
-      `https://api.armortemplate.site/applications/${id}`
+      `https://api.armortemplate.com/applications/${id}`
     );
 
     const subdomain = application.data.subdomain;
@@ -29,7 +29,7 @@ module.exports = (options = {}) => {
       throw new Error("No tienes permisos para eliminar esta aplicación");
     } else {
       const deleteApp = await axios.post(
-        `https://docker.armortemplate.site/delete-application`,
+        `https://docker.armortemplate.com/delete-application`,
         {
           subdomain: subdomain,
           password: "luci2024",

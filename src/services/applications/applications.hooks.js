@@ -27,9 +27,8 @@ module.exports = {
       authenticate("jwt"),
       restrictTo_1_app(),
       checkPermissions({
-        roles: ["subscribe"],
+        roles: ["free", "subscribe"],
       }),
-
       portCount(),
       createApp(),
     ],
@@ -46,7 +45,7 @@ module.exports = {
     patch: [
       authenticate("jwt"),
       checkPermissions({
-        roles: ["subscribe"],
+        roles: ["subscribe", "free"],
       }),
       restrictToOwner(),
     ],
@@ -54,7 +53,7 @@ module.exports = {
       authenticate("jwt"),
       restrictToOwner(),
       checkPermissions({
-        roles: ["subscribe"],
+        roles: ["subscribe", "free"],
       }),
       removeApp(),
     ],

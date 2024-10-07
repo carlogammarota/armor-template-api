@@ -21,7 +21,7 @@ module.exports = (options = {}) => {
   
 
     try {
-      const createApp = await axios.post("https://docker.armortemplate.site/create-app", {
+      const createApp = await axios.post("https://docker.armortemplate.com/create-app", {
         //hay que enviarle con contraseña (si se vende como template ocultar esto)
         api_port,
         frontend_port,

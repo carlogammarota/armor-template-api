@@ -14,7 +14,7 @@ exports.Applications = class Applications extends Service {
   //model
   //   {
   //     "subdomain": "despierta-capillaaaaa6",
-  //     "logo": "https://despierta-capilla-8.armortemplate.site/assets/logo-c9ca0974.svg", //svg
+  //     "logo": "https://despierta-capilla-8.armortemplate.com/assets/logo-c9ca0974.svg", //svg
   //     "title": "Vue3 E-commerce, Event's and Blogging Theme",
   //     "description":"Introducing Armor Template, a robust and feature-rich web theme that combines the power of modern technologies to kickstart your next online project. Crafted with Vue3, Vuex, Tailwind CSS, Express.js (SSR), Node.js, and Socket.io, Feathers.js (rest) this versatile template offers everything you need to create a dynamic web presence.",
   //     "theme": "dark",

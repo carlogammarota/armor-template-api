@@ -15,11 +15,16 @@ module.exports = (options = {}) => {
 
 
         //traer todas las aplicaciones del usuario, si tiene mas de 1 no lo deja pasar
-        const applications = await context.app.service("applications").find({
+        let applications = await context.app.service("applications").find({
             query: {
                 user: context.params.user._id
             }
         });
+
+        //ver hoy! importante para que solo deje crear una aplicacion!!!!!!!!!!!!
+        console.log("applications", applications);
+
+         applications = applications.data;
 
         if (applications.total > 0) {
             throw new Error("Ya tienes una aplicación");

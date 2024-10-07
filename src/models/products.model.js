@@ -20,6 +20,7 @@ module.exports = function (app) {
     slug: { type: String, required: true },
     categoryId: { type: String, required: true },
     subcategory: { type: String, required: true },
+    type: { type: String, required: true },
 
     // Automotive fields (if needed)
     brand: { type: String },
@@ -91,12 +92,12 @@ module.exports = function (app) {
       type: String,
       enum: ['House', 'Apartment', 'Condo', 'Townhouse', 'Land']
     },
-    address: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    zipCode: { type: String, required: true },
-    bedrooms: { type: Number, required: true },
-    bathrooms: { type: Number, required: true },
+    address: { type: String, required: false },
+    city: { type: String, required: false },
+    state: { type: String, required: false },
+    zipCode: { type: String, required: false },
+    bedrooms: { type: Number, required: false },
+    bathrooms: { type: Number, required: false },
     squareFeet: { type: Number },
     lotSize: { type: String },
     yearBuilt: { type: Number },

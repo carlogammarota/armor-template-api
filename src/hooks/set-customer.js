@@ -5,7 +5,7 @@
 module.exports = (options = {}) => {
   return async context => {
     //declaramos el permiso de usuario
-    context.data.permissions = ['customer'];
+    context.data.permissions = ['customer','free'];
     return context;
   };
 };

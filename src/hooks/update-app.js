@@ -13,14 +13,14 @@ module.exports = (options = {}) => {
     // console.log("update-app", context);
 
     let application = await axios.get(
-      `https://api.armortemplate.site/applications/${id}`
+      `https://api.armortemplate.com/applications/${id}`
     );
 
     application = application.data;
 
     console.log("application", application);
 
-    let data = await axios.get("https://api.armortemplate.site/settings/", {
+    let data = await axios.get("https://api.armortemplate.com/settings/", {
         query: {
           $limit: 1,
         }
@@ -55,7 +55,7 @@ module.exports = (options = {}) => {
 
 
     const updateApp = await axios.post(
-      `https://docker.armortemplate.site/update-app`,
+      `https://docker.armortemplate.com/update-app`,
       {
         subdomain: subdomain,
         password: "luci2024",

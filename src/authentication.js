@@ -49,7 +49,7 @@ module.exports = (app) => {
           "581198273846-ddc8u98cf5g86rskj9c011oai3sgtbur.apps.googleusercontent.com",
         clientSecret: "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",
 
-        callbackURL: "https://api.armortemplate.site/auth/google/callback",
+        callbackURL: "https://api.armortemplate.com/auth/google/callback",
         passReqToCallback: true,
       },
 
@@ -156,14 +156,14 @@ module.exports = (app) => {
       if(true) {
         // Redirige al éxito y pasa el token JWT
         res.redirect(
-          `https://armortemplate.site/autologin?token=${req.user.token}&user_id=${req.user._id}`
+          `https://armortemplate.com/autologin?token=${req.user.token}&user_id=${req.user._id}`
           // `http://localhost:9999/autologin?token=${req.user.token}&user_id=${req.user._id}`
           );
       };
 
       // if(subdomain != 'api') {
       //   res.redirect(
-      //     `https://${subdomain}.armortemplate.site/autologin?token=${req.user.token}&user_id=${req.user._id}`);
+      //     `https://${subdomain}.armortemplate.com/autologin?token=${req.user.token}&user_id=${req.user._id}`);
       // }
 
     }

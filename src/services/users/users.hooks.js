@@ -11,6 +11,8 @@ const restrictToOwner = require('../../hooks/restrict-to-owner-users.js');
 
 const setCustomer = require('../../hooks/set-customer');
 
+const isAdmin = require('../../hooks/is-admin');
+
 
 
 //hook para que 

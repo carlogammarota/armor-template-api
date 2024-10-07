@@ -3,7 +3,7 @@ const axios = require("axios");
 module.exports = (options = {}) => {
   return async (context) => {
     const data = context.data;
-    context.data.link = "https://" + data.subdomain + ".armortemplate.site";
+    context.data.link = "https://" + data.subdomain + ".armortemplate.com";
     context.data.status = "creating";
 
     //modelo restaurante default.
@@ -15,8 +15,8 @@ module.exports = (options = {}) => {
       location: "",
       telephone: 0,
       email: "",
-      background_image: "https://armortemplate.site/images/blanco-hojas-verdes.jpg",
-      banner_image: "https://armortemplate.site/images/zanahorias.jpg"
+      background_image: "https://armortemplate.com/images/blanco-hojas-verdes.jpg",
+      banner_image: "https://armortemplate.com/images/zanahorias.jpg"
     };
   
     context.data.plugins = {
@@ -25,7 +25,7 @@ module.exports = (options = {}) => {
       },
     };
   
-    let sett = await axios.get("https://api.armortemplate.site/settings/", {
+    let sett = await axios.get("https://api.armortemplate.com/settings/", {
       query: {
         $limit: 1,
       },

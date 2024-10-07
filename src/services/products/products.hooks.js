@@ -7,6 +7,7 @@ module.exports = {
     get: [],
     create: [authenticate('jwt'), ],
     update: [authenticate('jwt'), restrictToOwner()],
+    //arreglar
     patch: [authenticate('jwt'), restrictToOwner()],
     remove: [authenticate('jwt'), restrictToOwner()]
   },

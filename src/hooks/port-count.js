@@ -4,7 +4,7 @@ module.exports = (options = {}) => {
     const { app, service, data } = context;
 
 
-    //verificar si los servidores estan disponibles https://docker.armortemplate.site/create-app
+    //verificar si los servidores estan disponibles https://docker.armortemplate.com/create-app
     //si no estan disponibles no se puede crear la aplicacion
 
 
