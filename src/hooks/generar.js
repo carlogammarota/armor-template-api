@@ -3,11 +3,29 @@
 /* eslint-disable no-unreachable */
 // Use this hook to manipulate incoming or outgoing data.
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
-const mercadopago = require("mercadopago");
-axios = require("axios");
+// const mercadopago = require("mercadopago");
 const crypto = require("crypto");
 const express = require("express");
 const bodyParser = require("body-parser");
+const axios = require('axios');
+
+async function createMercadoPagoPreference(token, data) {
+  const url = 'https://api.mercadopago.com/checkout/preferences';
+
+
+  try {
+      const response = await axios.post(url, data, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+          }
+      });
+       console.log('Preference created:', response.data);
+      return response.data.init_point;
+  } catch (error) {
+      console.error('Error creating preference:', error.response ? error.response.data : error.message);
+  }
+}
 
 const app = express();
 
@@ -23,17 +41,22 @@ module.exports = (options = {}) => {
     let settings = await context.app.service("settings").find();
     let token = settings.data[0].plugins.mercadopago.mercadopago_token;
 
+    token = "APP_USR-3339336448677361-041601-091aece8a0c670acde2ef5048390f69e-94662750"
+
     //por el momento harcodeamos el token
-    // token =
-    //   "APP_USR-5050283024010521-080117-1be3cde8e474088c42201a3722be9673-1304411976";
+  //  token = "APP_USR-5050283024010521-080117-1be3cde8e474088c42201a3722be9673-1304411976";
+
+  console.log("TOKEN", token);
 
     // Configurar MercadoPago
-    mercadopago.configure({
-      sandbox: false,
-      access_token: token,
-    });
+    // mercadopago.configure({
+    //   sandbox: false,
+    //   access_token: "APP_USR-3967596500928054-020703-58d66af4da4675b3a2c2c5ed3d5ca6d2-94662750",
+    // });
 
-    const tipo = context.result.tipo;
+    // console.log("mercadopago", mercadopago);
+
+    const tipo = "producto";
 
     // Moneda
     context.result.moneda = "ARS";
@@ -92,19 +115,22 @@ module.exports = (options = {}) => {
     const costoEnvio = 2000;
 
     // Crear pago en el servicio de pagos
-    let res = await context.app.service("payments").create({
-      email: email,
-      productos: context.result.productos,
-      total,
-      moneda: "ARS",
-      tipo: context.result.tipo,
-      estado: "pendiente",
-      orderId,
-      precioEnvio: costoEnvio,
-      envio: context.result.envio,
-      cupon: context.result.cupon,
-      emailEnviado: false,
-    });
+      let res = await context.app.service("payments").create({
+        email: email,
+        productos: context.result.productos,
+        total,
+        moneda: "ARS",
+        tipo: context.result.tipo,
+        estado: "pendiente",
+        orderId,
+        precioEnvio: costoEnvio,
+        envio: context.result.envio,
+        cupon: context.result.cupon,
+        emailEnviado: false,
+      });
+    
+
+    
 
     let id_pago = res._id;
     console.log("id_pago", id_pago);
@@ -131,32 +157,34 @@ module.exports = (options = {}) => {
       items: [
         {
           id: 1,
-          title: "Sabores Del Monte",
+          title: "Armor Template",
           quantity: 1,
           currency_id: "ARS",
           unit_price: total,
         },
       ],
       back_urls: {
-        pending: "https://saboresdelmonte.com/",
-        failure: "https://saboresdelmonte.com/",
-        success: `https://saboresdelmonte.com/products/gracias/${id_pago}`,
-        pending: `https://saboresdelmonte.com/products/gracias/${id_pago}`,
-        failure: `https://saboresdelmonte.com/products/gracias/${id_pago}`,
+        pending: "https://armortemplate.com/",
+        failure: "https://armortemplate.com/",
+        success: `https://armortemplate.com/products/gracias/${id_pago}`,
+        pending: `https://armortemplate.com/products/gracias/${id_pago}`,
+        failure: `https://armortemplate.com/products/gracias/${id_pago}`,
       },
       auto_return: "approved",
       external_reference: JSON.stringify(id_pago),
-      notification_url: "https://api-server.saboresdelmonte.com/mercadopago",
+      notification_url: "https://api.armortemplate.com/mercadopago",
     };
 
-    let linkDePago = await mercadopago.preferences.create(preference);
-    context.result.linkDePago = linkDePago.response.init_point;
+    // let linkDePago = await mercadopago.preferences.create(preference);
+    let linkDePago = await createMercadoPagoPreference(token, preference);
+
+    context.result.linkDePago = linkDePago;
 
     let payment = await context.app.service("payments").patch(id_pago, {
       id_comprador: context.data.id_comprador,
       id_vendedor: "no se sabe",
       productos: context.result.productos,
-      linkDePago: linkDePago.response.init_point,
+      linkDePago: linkDePago,
       estado: "pendiente",
       id_user: JSON.stringify(id_pago),
       email: email,
@@ -166,7 +194,7 @@ module.exports = (options = {}) => {
     console.log("payment", payment);
 
     context.result = {
-      linkDePago: linkDePago.response.init_point,
+      linkDePago: linkDePago,
       id_pago: id_pago,
       total: total,
     };

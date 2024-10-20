@@ -53,7 +53,7 @@
     "feathers-mongoose": "^8.3.1",
     "feathers-permissions": "^2.1.4",
     "helmet": "^4.3.1",
-    "mercadopago": "^1.5.16",
+    "mercadopago": "^1.5.17",
     "mongodb": "^3.6.3",
     "mongodb-core": "^3.2.7",
     "mongoose": "^5.11.9",
