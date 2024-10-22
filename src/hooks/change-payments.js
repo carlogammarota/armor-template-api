@@ -26,7 +26,7 @@ const path = require("path");
 //     "APP_USR-2354878281626192-122521-a41bf257a1dd84f3f5edc648a49d806a-1042694053",
 // });
 
-const nodemailer = require("nodemailer");
+
 // const axios = require('axios');
 const readFile = util.promisify(fs.readFile);
 const usersArray = [];
@@ -36,8 +36,12 @@ const app = express();
 app.use(bodyParser.json());
 const id_ticket = null;
 
-//enviar email
-async function enviarCorreo(pago) {
+
+async function enviarCorreo(pago, productos) {
+    
+
+
+
   // Configuración del transporte del correo electrónico
   const transporter = nodemailer.createTransport({
     host: "smtp-relay.sendinblue.com",
@@ -51,83 +55,42 @@ async function enviarCorreo(pago) {
     // Leer el archivo HTML como una cadena de texto
     let htmlContent = await readFile("./email.html", "utf8");
 
-    // Formatear la lista de productos
-    let productosHtml = pago.productos
-      .map(
-        (producto) => `
-      <div class="flex justify-between items-center border-b border-gray-200 pb-2">
-        <span class="text-gray-600">${producto.product.title}</span>
-        <span class="text-gray-600">Cantidad: ${producto.quantity}</span>
-        <span class="text-gray-900">${producto.product.price} ARS</span>
-      </div>
-    `
-      )
-      .join("");
+    const productosHtml = productos.map((producto) => `
+    <tr>
+        <td class="py-2">
+            <img src="${producto.product.images[0]}" width="50" alt="${producto.product.title}">
+        </td>
+        <td class="py-2">
+            <strong>${producto.product.title}</strong>
+            <p class="text-slate-500">Cantidad: ${producto.quantity}</p>
+        </td>
+        <td class="py-2 text-right">
+            ARS $ ${producto.product.price}
+        </td>
+    </tr>
+    `).join("");
 
     // Reemplazar los marcadores de posición en el HTML con datos reales
-    let customizedHtml = htmlContent
-      .replace("{{nombre}}", pago.envio.nombre)
-      .replace("[id_compra]", pago.orderId)
-      .replace("[correo]", pago.email)
-      .replace("[totalEnProductos]", pago.total)
-      .replace("[envio]", 2000 + "ARS")
-      .replace("[total]", pago.total + 2000)
-      .replace("[estado]", pago.estado)
-      .replace("[fecha]", new Date(pago.createdAt).toLocaleDateString())
-      .replace("[productos]", productosHtml)
-      .replace("[fecha_entrega]", pago.envio.diaEnvio)
-      .replace("[hora_entrega]", pago.envio.diaEnvio);
 
-    //si el total supero los 15.000 el envio es gratis
-    if (pago.total > 15000) {
-      customizedHtml = customizedHtml.replace("[envio]", 0 + " ARS");
-      customizedHtml = customizedHtml.replace("[total]", pago.total);
-    }
 
-    // <div style="margin-top: 1.25rem">
-    //   <a
-    //     href="${pago.linkDePago}"
-    //     style="
-    //                                 display: inline-block;
-    //                                 padding-left: 1.5rem;
-    //                                 padding-right: 1.5rem;
-    //                                 padding-top: 0.625rem;
-    //                                 padding-bottom: 0.625rem;
-    //                                 background-color: #2563eb;
-    //                                 color: #ffffff;
-    //                                 font-weight: 500;
-    //                                 font-size: 0.75rem;
-    //                                 text-transform: uppercase;
-    //                                 border-radius: 0.25rem;
-    //                                 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    //                                 transition: background-color 0.15s
-    //                                     ease-in-out,
-    //                                   box-shadow 0.15s ease-in-out;
-    //                               "
-    //   >
-    //     Pagar Ahora
-    //   </a>
-    // </div>;
-    //en estado pago dependiendo del estado se muestra un boton para pagar o un mensaje de aprobado o rechazado
-    let botonPago = "";
-    if (pago.estado == "aprobado") {
-      botonPago = `
-      <div style="margin-top: 1.25rem">
-        
-        <p style="color: #2563eb; font-weight: 500; font-size: 0.75rem; text-transform: uppercase;">
-          Pago Aprobado
-        </p>
-      </div>
-    `;
-    }
+    // // Reemplazar los marcadores de posición en el HTML con datos reales
+     let customizedHtml = htmlContent
 
-    customizedHtml = customizedHtml.replace("[estado_pago]", botonPago);
+    //estos!!
+     .replace("[productos]", productosHtml)
+        // .replace("[envio]", "ARS $" + pago.envio)
+      .replace("[total]", pago.total)
+
+
+
+    
 
     // Detalles del correo electrónico
     const mailOptions = {
       from: "carlo.gammarota@gmail.com",
-      to: pago.email,
-      subject: "Sabores del Monte - Detalles de tu compra",
+      to: 'carlo.gammarota@gmail.com',
+    //   to: pago.email,
+      subject: "Compra realizada",
       html: customizedHtml,
     };
 
@@ -138,6 +101,10 @@ async function enviarCorreo(pago) {
     console.error("Error al enviar el correo electrónico:", error);
   }
 }
+
+//6716f7e27090ba19ce4bd043
+
+
 
 module.exports = (options = {}) => {
   return async (context) => {
@@ -240,7 +207,7 @@ module.exports = (options = {}) => {
               emailEnviado: true,
             });
 
-            enviarCorreo(pago);
+            enviarCorreo(pago, pago.productos);
           }
 
           //si el pago esta aprobado se

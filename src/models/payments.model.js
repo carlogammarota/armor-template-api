@@ -27,6 +27,11 @@ module.exports = function (app) {
       moneda: { type: String, required: false },
       tipo: { type: String, required: false },
       detalle: { type: Object, required: false },
+      envio: { type: String, required: false },
+      emailEnviado: { type: Boolean, required: false },
+      precioEnvio: { type: Number, required: false },
+      direccion: { type: Object, required: false },
+      envio_costo: { type: Number, required: false },
     },
     {
       timestamps: true,

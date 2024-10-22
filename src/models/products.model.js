@@ -22,6 +22,7 @@ module.exports = function (app) {
     subcategory: { type: String, required: true },
     type: { type: String, required: true },
     iva: { type: Boolean, required: false },
+    stock: { type: Number, required: false },
 
     // Automotive fields (if needed)
     brand: { type: String },

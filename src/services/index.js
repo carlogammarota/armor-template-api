@@ -28,6 +28,8 @@ const mercadopago = require('./mercadopago/mercadopago.service.js');
 const restaurant = require('./restaurant/restaurant.service.js');
 
 const cupones = require('./cupones/cupones.service.js');
+const envios = require('./envios/envios.service.js');
+const metodosEnvio = require('./metodos-envio/metodos-envio.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users);
@@ -53,4 +55,6 @@ module.exports = function (app) {
   app.configure(mercadopago);
   app.configure(restaurant);
   app.configure(cupones);
+  app.configure(envios);
+  app.configure(metodosEnvio);
 };

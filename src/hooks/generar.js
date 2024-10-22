@@ -20,7 +20,7 @@ async function createMercadoPagoPreference(token, data) {
               'Authorization': 'Bearer ' + token
           }
       });
-       console.log('Preference created:', response.data);
+      //  console.log('Preference created:', response.data);
       return response.data.init_point;
   } catch (error) {
       console.error('Error creating preference:', error.response ? error.response.data : error.message);
@@ -35,170 +35,151 @@ app.use(bodyParser.json());
 // const mercadopago = require('mercadopago');
 // const crypto = require('crypto');
 
+
 module.exports = (options = {}) => {
   return async (context) => {
-    // Obtener configuración
-    let settings = await context.app.service("settings").find();
-    let token = settings.data[0].plugins.mercadopago.mercadopago_token;
+    try {
 
-    token = "APP_USR-3339336448677361-041601-091aece8a0c670acde2ef5048390f69e-94662750"
 
-    //por el momento harcodeamos el token
-  //  token = "APP_USR-5050283024010521-080117-1be3cde8e474088c42201a3722be9673-1304411976";
+      // Configuración de MercadoPago
+      const settings = await context.app.service("settings").find();
 
-  console.log("TOKEN", token);
+      const dominio = settings.data[0].subdomain
 
-    // Configurar MercadoPago
-    // mercadopago.configure({
-    //   sandbox: false,
-    //   access_token: "APP_USR-3967596500928054-020703-58d66af4da4675b3a2c2c5ed3d5ca6d2-94662750",
-    // });
+      console.log("DOMINIO", dominio);
 
-    // console.log("mercadopago", mercadopago);
 
-    const tipo = "producto";
 
-    // Moneda
-    context.result.moneda = "ARS";
+      const token = settings.data[0].plugins.mercadopago.mercadopago_token || "APP_USR-3339336448677361-041601-091aece8a0c670acde2ef5048390f69e-94662750";
+      // console.log("TOKEN", token);
 
-    // Productos
-    let productos = context.result.productos;
+      // Obtener detalles del contexto
+      let { envio_costo, total, direccion, email, productos, cupon, carrito } = context.result;
 
-    console.log("CONTEXT-RESULT >", context.result);
+      // Moneda
+      context.result.moneda = "ARS";
 
-    // Email del comprador
-    let email = context.result.email;
-
-    // Buscar el precio de cada producto y sumarlos
-    if (tipo === "producto") {
-      for (let i = 0; i < productos.length; i++) {
-        let precio = await context.app.service("products").get(productos[i].id);
-        productos[i].precio = precio.price;
+      // Validar tipo de transacción
+      const tipo = "producto";
+      if (tipo !== "producto") {
+        throw new Error("No es un producto");
       }
-    } else {
-      console.log("no es un producto");
-      const error = new Error("No es un producto");
-      throw error;
-    }
 
-    let total = 0;
-    // Sumar los precios con también la cantidad
-    for (let i = 0; i < productos.length; i++) {
-      total += productos[i].precio * productos[i].quantity;
-    }
+      // console.log("TOTAL", total);
 
-    // Si hay cupón, aplicar descuento
-    if (context.result.cupon && context.result.cupon.estado === true) {
-      let cupon = context.result.cupon;
-      let descuento = (total * cupon.descuento) / 100;
-      total -= descuento;
-    }
 
-    context.result.total = total;
+      
+      
 
-    // Agregar descripción a los productos
-    for (let i = 0; i < productos.length; i++) {
-      let precio = await context.app.service("products").get(productos[i].id);
-      productos[i].precio = precio.price;
-      productos[i].description = productos[i].content;
-    }
 
-    // Función para generar Order ID
-    function generateOrderId() {
-      const randomNum = crypto.randomInt(0, 1000);
-      const formattedNum = randomNum.toString().padStart(5, "0");
-      return `UL-${formattedNum}`;
-    }
+      // Aplicar descuento si hay cupón válido
+      // if (cupon?.estado) {
+      //   const descuento = (total * cupon.descuento) / 100;
+      //   total -= descuento;
+      // }
 
-    let orderId = generateOrderId();
 
-    const costoEnvio = 2000;
 
-    // Crear pago en el servicio de pagos
-      let res = await context.app.service("payments").create({
-        email: email,
-        productos: context.result.productos,
-        total,
-        moneda: "ARS",
-        tipo: context.result.tipo,
-        estado: "pendiente",
-        orderId,
-        precioEnvio: costoEnvio,
-        envio: context.result.envio,
-        cupon: context.result.cupon,
-        emailEnviado: false,
-      });
-    
 
-    
+      // context.result.total = total;
 
-    let id_pago = res._id;
-    console.log("id_pago", id_pago);
+      // Generar Order ID
+      const orderId = `UL-${crypto.randomInt(0, 1000).toString().padStart(5, "0")}`;
+     
 
-    const items = context.result.productos.map((producto, index) => {
-      return {
+      // console.log("productos", productos);
+
+
+     
+
+
+
+      const totalEnProductos = productos.map((producto, index) => ({
         id: index,
         title: "Productos",
-        quantity: producto.quantity,
+        quantity: producto.product.quantity,
         currency_id: "ARS",
-        unit_price: producto.precio,
+        unit_price: producto.product.price,
+      }));
+
+
+      // Crear registro de pago
+      const paymentData = {
+        email,
+        productos,
+        total,
+        moneda: "ARS",
+        tipo,
+        estado: "pendiente",
+        orderId,
+        precioEnvio: envio_costo,
+        envio: envio_costo,
+        cupon,
+        direccion,
+        emailEnviado: false,
       };
-    });
+      const paymentResponse = await context.app.service("payments").create(paymentData);
+      const id_pago = paymentResponse._id;
+      // console.log("id_pago", id_pago);
 
-    // Si la compra supera los 15000 el envío es gratis
-    let envio = 2000;
-    if (total >= 15000) {
-      envio = 0;
-    }
-
-    total += envio;
-
-    const preference = {
-      items: [
-        {
+      // Crear preferencia de pago para MercadoPago
+      const preference = {
+        items: [{
           id: 1,
-          title: "Armor Template",
+          title: "Productos",
           quantity: 1,
           currency_id: "ARS",
           unit_price: total,
+          // {
+          //   id: 1,
+          //   title: "Productos",
+          //   quantity,
+          //   currency_id: "ARS",
+          //   unit_price: total,
+          // },
+          // {
+          //   id: 2,
+          //   title: "Envío",
+          //   quantity: 1,
+          //   currency_id: "ARS",
+          //   unit_price: costoEnvio,
+          // },
+        }],
+        back_urls: {
+          pending: `https://armortemplate.com/success/${id_pago}`,
+          failure: `https://armortemplate.com/success/${id_pago}`,
+          success: `https://armortemplate.com/success/${id_pago}`,
         },
-      ],
-      back_urls: {
-        pending: "https://armortemplate.com/",
-        failure: "https://armortemplate.com/",
-        success: `https://armortemplate.com/products/gracias/${id_pago}`,
-        pending: `https://armortemplate.com/products/gracias/${id_pago}`,
-        failure: `https://armortemplate.com/products/gracias/${id_pago}`,
-      },
-      auto_return: "approved",
-      external_reference: JSON.stringify(id_pago),
-      notification_url: "https://api.armortemplate.com/mercadopago",
-    };
+        auto_return: "approved",
+        external_reference: JSON.stringify(id_pago),
+        notification_url: "https://api.armortemplate.com/mercadopago",
+      };
 
-    // let linkDePago = await mercadopago.preferences.create(preference);
-    let linkDePago = await createMercadoPagoPreference(token, preference);
+      const linkDePago = await createMercadoPagoPreference(token, preference);
+      context.result.linkDePago = linkDePago;
 
-    context.result.linkDePago = linkDePago;
+      // Actualizar el estado del pago en la base de datos
+      await context.app.service("payments").patch(id_pago, {
+        id_comprador: context.data.id_comprador,
+        id_vendedor: "no se sabe",
+        productos,
+        linkDePago,
+        estado: "pendiente",
+        id_user: JSON.stringify(id_pago),
+        email,
+      });
 
-    let payment = await context.app.service("payments").patch(id_pago, {
-      id_comprador: context.data.id_comprador,
-      id_vendedor: "no se sabe",
-      productos: context.result.productos,
-      linkDePago: linkDePago,
-      estado: "pendiente",
-      id_user: JSON.stringify(id_pago),
-      email: email,
-      estado: "pendiente",
-    });
+      // Responder con los datos necesarios
+      context.result = {
+        linkDePago,
+        id_pago,
+        total,
+      };
 
-    console.log("payment", payment);
-
-    context.result = {
-      linkDePago: linkDePago,
-      id_pago: id_pago,
-      total: total,
-    };
-
-    return context;
+      return context;
+    } catch (error) {
+      console.error("Error en el procesamiento del pago:", error);
+      throw error;
+    }
   };
 };

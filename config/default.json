@@ -19,10 +19,10 @@
       "header": {
         "typ": "access"
       },
-      "audience": "https://yourdomain.com",
+      "audience": "https://armortemplate.com",
       "issuer": "feathers",
       "algorithm": "HS256",
-      "expiresIn": "1d"
+      "expiresIn": "300d"
     },
     "local": {
       "usernameField": "email",
