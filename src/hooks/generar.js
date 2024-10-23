@@ -48,13 +48,26 @@ module.exports = (options = {}) => {
 
       console.log("DOMINIO", dominio);
 
+      const dominioCompleto = "";
+
+      if (dominio === "localhost") {
+        dominioCompleto = `http://localhost:3030`;
+      }
+
+      if (dominio === "armortemplate.com") {
+        dominioCompleto = `https://armortemplate.com`;
+      }
+
+      
+
+
 
 
       const token = settings.data[0].plugins.mercadopago.mercadopago_token || "APP_USR-3339336448677361-041601-091aece8a0c670acde2ef5048390f69e-94662750";
       // console.log("TOKEN", token);
 
       // Obtener detalles del contexto
-      let { envio_costo, total, direccion, email, productos, cupon, carrito } = context.result;
+      let { envio, total, direccion, email, productos, cupon, carrito } = context.result;
 
       // Moneda
       context.result.moneda = "ARS";
@@ -112,8 +125,8 @@ module.exports = (options = {}) => {
         tipo,
         estado: "pendiente",
         orderId,
-        precioEnvio: envio_costo,
-        envio: envio_costo,
+        precioEnvio: envio,
+        envio: envio,
         cupon,
         direccion,
         emailEnviado: false,
